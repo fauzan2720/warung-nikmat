@@ -1,0 +1,7 @@
+{
+    "modules": [
+        "splash_screen",
+        "auth/login",
+        "home/main_navigation"
+    ]
+}
