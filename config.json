@@ -1,7 +1,13 @@
 {
+    "openai_key": "",
     "modules": [
         "splash_screen",
         "auth/login",
-        "home/main_navigation"
+        "home/main_navigation",
+        "home/home",
+        "home/history",
+        "home/cart",
+        "home/wishlist",
+        "home/profile"
     ]
 }

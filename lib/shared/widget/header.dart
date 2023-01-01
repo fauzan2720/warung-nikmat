@@ -5,8 +5,10 @@ class HeaderApp extends StatelessWidget {
   const HeaderApp({
     super.key,
     required this.label,
+    this.isBackPressed = false,
   });
   final String label;
+  final bool isBackPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +16,22 @@ class HeaderApp extends StatelessWidget {
       padding: const EdgeInsets.only(top: 40.0),
       child: Stack(
         children: [
-          InkWell(
-            onTap: () => Get.back(),
-            child: Icon(
-              Icons.chevron_left,
-              size: 24.0,
-              color: darkColor,
+          if (isBackPressed)
+            InkWell(
+              onTap: () => Get.back(),
+              child: Icon(
+                Icons.chevron_left,
+                size: 24.0,
+                color: secondaryColor,
+              ),
             ),
-          ),
           Center(
             child: Text(
               label,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: medium,
-                color: darkColor,
+                fontWeight: semibold,
+                color: secondaryColor,
               ),
             ),
           )

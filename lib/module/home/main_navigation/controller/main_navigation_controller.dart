@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:warung_nikmat/state_util.dart';
-import '../view/main_navigation_view.dart';
+import 'package:warung_nikmat/core.dart';
 
-class MainNavigationController extends State<MainNavigationView> implements MvcController {
+class MainNavigationController extends State<MainNavigationView>
+    implements MvcController {
   static late MainNavigationController instance;
   late MainNavigationView view;
+
+  List<Widget> widgetOptions = <Widget>[
+    const HomeView(),
+    const Center(
+      child: Text("History View"),
+    ),
+    const WishlistView(),
+    const ProfileView(),
+  ];
+
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -14,6 +25,11 @@ class MainNavigationController extends State<MainNavigationView> implements MvcC
 
   @override
   void dispose() => super.dispose();
+
+  void onItemTapped(int index) {
+    currentIndex = index;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) => widget.build(context, this);

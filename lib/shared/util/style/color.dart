@@ -7,6 +7,8 @@ Color strokeColor = const Color(0xff666687);
 Color backgroundColor = const Color(0xff32324D);
 Color warningColor = const Color(0xffFF7B2C);
 Color lightColor = const Color(0xffDCDCE4);
+Color cardColor = const Color(0xff4A4A6A);
+Color starColor = const Color(0xffFFB01D);
+Color darkColor = const Color(0xff212134);
 
 Color successColor = const Color(0xff064635);
-Color darkColor = const Color(0xff1B1A17);

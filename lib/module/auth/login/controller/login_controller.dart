@@ -17,7 +17,6 @@ class LoginController extends State<LoginView> implements MvcController {
   doLoginGoogle() async {
     var isSuccess = await AuthService.doLogin();
     if (isSuccess) {
-      print('execute this');
       Get.offAll(const MainNavigationView());
     }
   }

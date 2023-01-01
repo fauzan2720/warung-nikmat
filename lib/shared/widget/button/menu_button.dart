@@ -5,10 +5,12 @@ class FozMenuButton extends StatelessWidget {
   const FozMenuButton({
     super.key,
     this.icon,
+    this.color,
     required this.label,
     required this.onTap,
   });
   final Widget? icon;
+  final Color? color;
   final String label;
   final void Function() onTap;
 
@@ -32,14 +34,15 @@ class FozMenuButton extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: 12.0,
-                  color: darkColor,
+                  color: color ?? secondaryColor,
                 ),
               ),
             ],
           ),
-          const Icon(
+          Icon(
             Icons.chevron_right,
             size: 24.0,
+            color: color ?? secondaryColor,
           ),
         ],
       ),

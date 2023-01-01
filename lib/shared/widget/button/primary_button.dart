@@ -12,12 +12,14 @@ class FozPrimaryButton extends StatelessWidget {
     this.height,
     required this.label,
     this.icon,
+    this.backgroundButton,
     required this.onPressed,
   });
   final double? width;
   final double? height;
   final String label;
   final IconData? icon;
+  final Color? backgroundButton;
   final void Function() onPressed;
 
   @override
@@ -27,7 +29,7 @@ class FozPrimaryButton extends StatelessWidget {
       height: height ?? heightButton,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
+          backgroundColor: backgroundButton ?? primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: radiusPrimary,
           ),

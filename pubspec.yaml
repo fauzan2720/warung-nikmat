@@ -43,6 +43,14 @@ dependencies:
   cloud_firestore: ^4.2.0
   firebase_auth: ^4.2.1
   google_sign_in: ^5.4.2
+  intl: ^0.17.0
+  flutter_slidable: ^2.0.0
+  flutter_launcher_icons: ^0.11.0
+  
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_test:
