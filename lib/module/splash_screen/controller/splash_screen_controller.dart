@@ -19,7 +19,7 @@ class SplashScreenController extends State<SplashScreenView>
 
   void getInit() {
     Future.delayed(
-      const Duration(seconds: 4),
+      const Duration(milliseconds: 1500),
       () => Get.put(const LoginView()),
     );
   }

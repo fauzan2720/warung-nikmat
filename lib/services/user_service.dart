@@ -13,27 +13,29 @@ class UserService {
     if (!snapshot.exists) {
       await userCollection.set({
         "id": FirebaseAuth.instance.currentUser!.uid,
-        "photo": FirebaseAuth.instance.currentUser!.photoURL,
-        "email": FirebaseAuth.instance.currentUser!.email,
         "name": FirebaseAuth.instance.currentUser!.displayName,
+        "email": FirebaseAuth.instance.currentUser!.email,
+        "phone_number": FirebaseAuth.instance.currentUser!.phoneNumber,
+        "photo": FirebaseAuth.instance.currentUser!.photoURL,
         "point": 0,
+        "is_admin": false,
       });
     }
   }
 
-  static updatePoint({
-    required double point,
-  }) async {
-    await userCollection.update({
-      "point": FieldValue.increment(point),
-    });
-  }
+  // static updatePoint({
+  //   required double point,
+  // }) async {
+  //   await userCollection.update({
+  //     "point": FieldValue.increment(point),
+  //   });
+  // }
 
-  static getUserData() {
-    return {
-      "id": FirebaseAuth.instance.currentUser!.uid,
-      "email": FirebaseAuth.instance.currentUser!.email,
-      "name": FirebaseAuth.instance.currentUser!.displayName,
-    };
-  }
+  // static getUserData() {
+  //   return {
+  //     "id": FirebaseAuth.instance.currentUser!.uid,
+  //     "email": FirebaseAuth.instance.currentUser!.email,
+  //     "name": FirebaseAuth.instance.currentUser!.displayName,
+  //   };
+  // }
 }

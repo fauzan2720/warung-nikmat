@@ -8,6 +8,8 @@
         "home/history",
         "home/cart",
         "home/wishlist",
-        "home/profile"
+        "home/profile",
+        "admin/home_admin",
+        "admin/add_product"
     ]
 }

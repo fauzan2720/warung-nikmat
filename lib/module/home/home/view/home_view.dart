@@ -56,7 +56,7 @@ class HomeView extends StatefulWidget {
                   width: Get.width / 2 - heightButton - 3.0,
                   label: 'Makanan',
                   backgroundButton: controller.currentFilter == 0
-                      ? warningColor
+                      ? yellowColor
                       : backgroundColor,
                   onPressed: () => controller.handleFilter(0),
                 ),
@@ -67,7 +67,7 @@ class HomeView extends StatefulWidget {
                   width: Get.width / 2 - heightButton - 3.0,
                   label: 'Minuman',
                   backgroundButton: controller.currentFilter == 1
-                      ? warningColor
+                      ? yellowColor
                       : backgroundColor,
                   onPressed: () => controller.handleFilter(1),
                 ),

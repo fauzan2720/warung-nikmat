@@ -40,22 +40,26 @@ class LoginView extends StatefulWidget {
                 height: 40.0,
               ),
               FozInputText(
-                value: '',
+                value: controller.email,
                 hintText: 'Email',
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  controller.email = value;
+                },
               ),
               FozInputPassword(
-                value: '',
+                value: controller.password,
                 hintText: 'Password',
-                onChanged: (value) {},
+                onChanged: (value) {
+                  controller.password = value;
+                },
               ),
               const SizedBox(
                 height: 20.0,
               ),
               FozPrimaryButton(
                 label: 'Ayo Mulai',
-                onPressed: () {},
+                onPressed: () => controller.doLoginAdmin(),
               ),
               SizedBox(
                 height: 80.0,

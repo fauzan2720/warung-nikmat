@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
 
@@ -31,7 +30,7 @@ class ProfileView extends StatefulWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50.0),
                     child: Image.network(
-                      "${FirebaseAuth.instance.currentUser?.photoURL}",
+                      "${FirebaseAuthService().user.photoURL}",
                       width: 64.0,
                       height: 64.0,
                     ),
@@ -43,7 +42,7 @@ class ProfileView extends StatefulWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${FirebaseAuth.instance.currentUser?.displayName}',
+                        '${FirebaseAuthService().user.displayName}',
                         style: TextStyle(
                           fontSize: 17.0,
                           fontWeight: semibold,
@@ -168,7 +167,51 @@ class ProfileView extends StatefulWidget {
                   ),
                   FozMenuButton(
                     label: 'Keluar',
-                    onTap: () => Get.put(const LoginView()),
+                    onTap: () async {
+                      bool confirm = false;
+                      await showDialog<void>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Konfirmasi'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: const <Widget>[
+                                  Text('Apakah anda yakin ingin keluar ?'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[600],
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Tidak"),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red[700],
+                                ),
+                                onPressed: () {
+                                  confirm = true;
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Iya"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      if (confirm) {
+                        FirebaseAuthService().signOut();
+                        Get.offAll(const SplashScreenView());
+                      }
+                    },
                     color: Colors.red[300],
                     icon: Icon(
                       Icons.logout_outlined,

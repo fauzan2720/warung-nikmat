@@ -6,8 +6,10 @@ class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     this.isCart = false,
+    this.isAdmin = false,
   });
   final bool isCart;
+  final bool isAdmin;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -26,11 +28,20 @@ class _ProductCardState extends State<ProductCard> {
         color: cardColor,
       ),
       child: Slidable(
-        endActionPane: widget.isCart
+        endActionPane: widget.isCart || widget.isAdmin
             ? ActionPane(
-                extentRatio: 0.18,
+                extentRatio: widget.isAdmin ? 0.3 : 0.18,
                 motion: const StretchMotion(),
                 children: [
+                  if (widget.isAdmin)
+                    SlidableAction(
+                      onPressed: (context) {
+                        print('Edit OK!');
+                      },
+                      backgroundColor: warningColor,
+                      foregroundColor: whiteColor,
+                      icon: Icons.edit,
+                    ),
                   SlidableAction(
                     borderRadius: BorderRadius.horizontal(
                       right: Radius.circular(radiusPrimarySize),
@@ -38,7 +49,7 @@ class _ProductCardState extends State<ProductCard> {
                     onPressed: (context) {
                       print('Delete OK!');
                     },
-                    backgroundColor: const Color(0xffFFB01D),
+                    backgroundColor: yellowColor,
                     foregroundColor: whiteColor,
                     icon: Icons.delete_outline,
                   ),
@@ -52,7 +63,7 @@ class _ProductCardState extends State<ProductCard> {
                     onPressed: (context) {
                       print('Favorite OK!');
                     },
-                    backgroundColor: const Color(0xffFFB01D),
+                    backgroundColor: yellowColor,
                     foregroundColor: whiteColor,
                     icon: Icons.favorite_border,
                   ),
