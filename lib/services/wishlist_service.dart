@@ -2,7 +2,6 @@ import '/core.dart';
 
 class WishlistService {
   List wishlist = mainStorage.get("wishlist") ?? [];
-  // List wishlistMakanan = wishlist.indexWhere((element) => element["type"] == "Minuman");
 
   saveToLocalStorage() async {
     await mainStorage.put("wishlist", wishlist);
