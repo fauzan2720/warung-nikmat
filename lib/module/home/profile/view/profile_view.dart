@@ -167,50 +167,12 @@ class ProfileView extends StatefulWidget {
                   ),
                   FozMenuButton(
                     label: 'Keluar',
-                    onTap: () async {
-                      bool confirm = false;
-                      await showDialog<void>(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Konfirmasi'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: const <Widget>[
-                                  Text('Apakah anda yakin ingin keluar ?'),
-                                ],
-                              ),
-                            ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.grey[600],
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Tidak"),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red[700],
-                                ),
-                                onPressed: () {
-                                  confirm = true;
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Iya"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-
-                      if (confirm) {
+                    onTap: () {
+                      showConfirmation(onPressed: () {
+                        mainStorage.clear();
                         FirebaseAuthService().signOut();
                         Get.offAll(const SplashScreenView());
-                      }
+                      });
                     },
                     color: Colors.red[300],
                     icon: Icon(

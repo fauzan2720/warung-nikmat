@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
+import 'package:warung_nikmat/services/wishlist_service.dart';
+import 'package:warung_nikmat/shared/widget/card/wishlist_card.dart';
 
 class WishlistView extends StatefulWidget {
   const WishlistView({Key? key}) : super(key: key);
@@ -12,15 +14,55 @@ class WishlistView extends StatefulWidget {
         child: Container(
           padding: primarySize,
           child: Column(
-            children: const [
-              HeaderApp(label: 'Wishlist'),
-              SizedBox(
+            children: [
+              const HeaderApp(label: 'Wishlist'),
+              const SizedBox(
                 height: 30.0,
               ),
-              ProductCard(),
-              ProductCard(),
-              ProductCard(),
-              ProductCard(),
+              Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: FozPrimaryButton(
+                      label: 'Makanan',
+                      backgroundButton: controller.currentFilter == 0
+                          ? yellowColor
+                          : backgroundColor,
+                      onPressed: () => controller.handleFilter(0),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: FozPrimaryButton(
+                      label: 'Minuman',
+                      backgroundButton: controller.currentFilter == 1
+                          ? yellowColor
+                          : backgroundColor,
+                      onPressed: () => controller.handleFilter(1),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              controller.currentFilter == 0
+                  ? Column(
+                      children: WishlistService()
+                          .wishlist
+                          .map((product) => product["type"] == "Makanan"
+                              ? WishlistCard(product)
+                              : const SizedBox())
+                          .toList(),
+                    )
+                  : Column(
+                      children: WishlistService()
+                          .wishlist
+                          .map((product) => product["type"] == "Minuman"
+                              ? WishlistCard(product)
+                              : const SizedBox())
+                          .toList(),
+                    ),
             ],
           ),
         ),

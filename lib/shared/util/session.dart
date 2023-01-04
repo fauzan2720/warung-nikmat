@@ -1,5 +1,5 @@
-// import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 
-// late Box mainStorage;
+late Box mainStorage;
 
-// class SessionManager {}
+class SessionManager {}

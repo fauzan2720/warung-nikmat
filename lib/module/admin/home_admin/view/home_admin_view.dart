@@ -43,50 +43,8 @@ class HomeAdminView extends StatefulWidget {
                     ],
                   ),
                   IconButton(
-                    onPressed: () async {
-                      bool confirm = false;
-                      await showDialog<void>(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Konfirmasi'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: const <Widget>[
-                                  Text('Apakah anda yakin ingin keluar ?'),
-                                ],
-                              ),
-                            ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.grey[600],
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Tidak"),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red[700],
-                                ),
-                                onPressed: () {
-                                  confirm = true;
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Iya"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-
-                      if (confirm) {
-                        Get.offAll(const SplashScreenView());
-                      }
-                    },
+                    onPressed: () => showConfirmation(
+                        onPressed: () => Get.offAll(const SplashScreenView())),
                     icon: const Icon(Icons.logout),
                     color: Colors.red[700],
                   ),
@@ -193,10 +151,39 @@ class HomeAdminView extends StatefulWidget {
               const SizedBox(
                 height: 20.0,
               ),
-              const ProductCard(isAdmin: true),
-              const ProductCard(isAdmin: true),
-              const ProductCard(isAdmin: true),
-              const ProductCard(isAdmin: true),
+              controller.currentFilter == 0
+                  ? StreamBuilder<List<ProductModel>>(
+                      stream: ProductService().getProducts(type: "Makanan"),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: snapshot.data!
+                                .map((product) =>
+                                    ProductCard(product, isAdmin: true))
+                                .toList(),
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      },
+                    )
+                  : StreamBuilder<List<ProductModel>>(
+                      stream: ProductService().getProducts(type: "Minuman"),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: snapshot.data!
+                                .map((product) =>
+                                    ProductCard(product, isAdmin: true))
+                                .toList(),
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
             ],
           ),
         ),

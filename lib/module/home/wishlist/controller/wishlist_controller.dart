@@ -6,6 +6,8 @@ class WishlistController extends State<WishlistView> implements MvcController {
   static late WishlistController instance;
   late WishlistView view;
 
+  int currentFilter = 0;
+
   @override
   void initState() {
     instance = this;
@@ -14,6 +16,11 @@ class WishlistController extends State<WishlistView> implements MvcController {
 
   @override
   void dispose() => super.dispose();
+
+  void handleFilter(int index) {
+    currentFilter = index;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) => widget.build(context, this);

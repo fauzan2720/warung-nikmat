@@ -94,10 +94,35 @@ class HomeView extends StatefulWidget {
             const SizedBox(
               height: 20.0,
             ),
-            const ProductCard(),
-            const ProductCard(),
-            const ProductCard(),
-            const ProductCard(),
+            controller.currentFilter == 0
+                ? StreamBuilder<List<ProductModel>>(
+                    stream: ProductService().getProducts(type: "Makanan"),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data!
+                              .map((product) => ProductCard(product))
+                              .toList(),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  )
+                : StreamBuilder<List<ProductModel>>(
+                    stream: ProductService().getProducts(type: "Minuman"),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data!
+                              .map((product) => ProductCard(product))
+                              .toList(),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
           ],
         ),
       ),

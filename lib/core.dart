@@ -3,8 +3,11 @@ We believe, the class name must be unique.
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
+export 'package:warung_nikmat/models/product_model.dart';
 export 'package:warung_nikmat/module/admin/add_product/controller/add_product_controller.dart';
 export 'package:warung_nikmat/module/admin/add_product/view/add_product_view.dart';
+export 'package:warung_nikmat/module/admin/edit_product/controller/edit_product_controller.dart';
+export 'package:warung_nikmat/module/admin/edit_product/view/edit_product_view.dart';
 export 'package:warung_nikmat/module/admin/home_admin/controller/home_admin_controller.dart';
 export 'package:warung_nikmat/module/admin/home_admin/view/home_admin_view.dart';
 export 'package:warung_nikmat/module/admin/home_admin/widget/filter_chart.dart';
@@ -26,6 +29,7 @@ export 'package:warung_nikmat/module/home/wishlist/view/wishlist_view.dart';
 export 'package:warung_nikmat/module/splash_screen/controller/splash_screen_controller.dart';
 export 'package:warung_nikmat/module/splash_screen/view/splash_screen_view.dart';
 export 'package:warung_nikmat/services/firebase_auth_service.dart';
+export 'package:warung_nikmat/services/product_service.dart';
 export 'package:warung_nikmat/services/user_service.dart';
 export 'package:warung_nikmat/shared/util/app_config.dart';
 export 'package:warung_nikmat/shared/util/currency_format.dart';
@@ -36,6 +40,10 @@ export 'package:warung_nikmat/shared/util/style/font_weight.dart';
 export 'package:warung_nikmat/shared/util/style/icon.dart';
 export 'package:warung_nikmat/shared/util/style/image.dart';
 export 'package:warung_nikmat/shared/util/style/size.dart';
+export 'package:warung_nikmat/shared/util/utility/show_alert.dart';
+export 'package:warung_nikmat/shared/util/utility/show_confirmation.dart';
+export 'package:warung_nikmat/shared/util/utility/show_loading.dart';
+export 'package:warung_nikmat/shared/util/utility/show_success.dart';
 export 'package:warung_nikmat/shared/widget/button/image/button_image.dart';
 export 'package:warung_nikmat/shared/widget/button/menu_button.dart';
 export 'package:warung_nikmat/shared/widget/button/outline/outline_dark_button.dart';

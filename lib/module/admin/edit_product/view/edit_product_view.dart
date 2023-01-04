@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import '/core.dart';
+import 'package:warung_nikmat/core.dart';
 
-class AddProductView extends StatefulWidget {
-  const AddProductView({Key? key}) : super(key: key);
+class EditProductView extends StatefulWidget {
+  const EditProductView(this.product, {Key? key}) : super(key: key);
+  final ProductModel product;
 
-  Widget build(context, AddProductController controller) {
+  Widget build(context, EditProductController controller) {
     controller.view = this;
-    controller.type = "Makanan";
+    controller.name = product.name!;
+    controller.price = product.price.toString();
+    controller.type = product.type!;
+    controller.photoUrl = product.photoUrl!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tambah Menu"),
+        title: const Text("Edit Menu"),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -33,12 +37,14 @@ class AddProductView extends StatefulWidget {
                 keyboardType: TextInputType.number,
               ),
               FozFormDropdown(
+                initialvalue: controller.type,
                 items: const ["Makanan", "Minuman"],
                 onChanged: (value) {
                   controller.type = value;
                 },
               ),
               FozImagePicker(
+                value: controller.photoUrl,
                 label: 'Foto',
                 onChanged: (value) {
                   controller.photoUrl = value;
@@ -48,7 +54,8 @@ class AddProductView extends StatefulWidget {
                 height: 30.0,
               ),
               FozPrimaryButton(
-                  label: 'Simpan', onPressed: () => controller.addProduct()),
+                  label: 'Simpan',
+                  onPressed: () => controller.editProduct(product.id!)),
             ],
           ),
         ),
@@ -57,5 +64,5 @@ class AddProductView extends StatefulWidget {
   }
 
   @override
-  State<AddProductView> createState() => AddProductController();
+  State<EditProductView> createState() => EditProductController();
 }

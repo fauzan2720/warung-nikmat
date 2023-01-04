@@ -21,22 +21,22 @@ class LoginController extends State<LoginView> implements MvcController {
       if (password == '123123123') {
         Get.offAll(const HomeAdminView());
       } else {
-        Get.showAlert("Oppsss", "Password salah");
+        showAlert("Oppsss", "Password salah");
       }
     } else {
-      Get.showAlert("Oppsss", "Email salah");
+      showAlert("Oppsss", "Email salah");
     }
   }
 
   doLoginGoogle() async {
-    Get.showLoading(primaryColor);
+    showLoading();
 
     if (await FirebaseAuthService().signInWithGoogle()) {
       await UserService.createUserIfNotExists();
       Get.offAll(const MainNavigationView());
     } else {
       Get.back();
-      Get.showAlert("Oppsss", "Login gagal");
+      showAlert("Oppsss", "Login gagal");
     }
   }
 

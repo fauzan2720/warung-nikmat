@@ -51,6 +51,10 @@ dependencies:
   dio: ^4.0.6
   file_picker: ^5.2.4
   image_picker: ^0.8.6
+  uuid: ^3.0.7
+  rflutter_alert: ^2.0.4
+  hive: ^2.2.3
+  path_provider: ^2.0.11
   
 flutter_icons:
   android: "launcher_icon"

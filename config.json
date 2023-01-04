@@ -10,6 +10,7 @@
         "home/wishlist",
         "home/profile",
         "admin/home_admin",
-        "admin/add_product"
+        "admin/add_product",
+        "admin/edit_product"
     ]
 }

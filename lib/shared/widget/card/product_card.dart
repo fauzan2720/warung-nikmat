@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:warung_nikmat/services/wishlist_service.dart';
 import '/core.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({
+  const ProductCard(
+    this.product, {
     super.key,
     this.isCart = false,
     this.isAdmin = false,
   });
+  final ProductModel product;
   final bool isCart;
   final bool isAdmin;
 
@@ -16,8 +19,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  bool isWishlist = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,9 +36,8 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   if (widget.isAdmin)
                     SlidableAction(
-                      onPressed: (context) {
-                        print('Edit OK!');
-                      },
+                      onPressed: (context) =>
+                          Get.to(EditProductView(widget.product)),
                       backgroundColor: warningColor,
                       foregroundColor: whiteColor,
                       icon: Icons.edit,
@@ -47,7 +47,11 @@ class _ProductCardState extends State<ProductCard> {
                       right: Radius.circular(radiusPrimarySize),
                     ),
                     onPressed: (context) {
-                      print('Delete OK!');
+                      showConfirmation(onPressed: () async {
+                        await ProductService()
+                            .deleteProduct(id: widget.product.id!);
+                        showSuccess();
+                      });
                     },
                     backgroundColor: yellowColor,
                     foregroundColor: whiteColor,
@@ -61,11 +65,18 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      print('Favorite OK!');
+                      WishlistService().addProduct(widget.product);
+                      showSuccess();
+                      setState(() {});
                     },
                     backgroundColor: yellowColor,
-                    foregroundColor: whiteColor,
-                    icon: Icons.favorite_border,
+                    foregroundColor:
+                        WishlistService().isWishlist(widget.product)
+                            ? warningColor
+                            : whiteColor,
+                    icon: WishlistService().isWishlist(widget.product)
+                        ? Icons.favorite
+                        : Icons.favorite_border,
                   ),
                   SlidableAction(
                     borderRadius: BorderRadius.only(
@@ -107,9 +118,9 @@ class _ProductCardState extends State<ProductCard> {
                         )
                       ],
                       borderRadius: BorderRadius.circular(50.0),
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: NetworkImage(
-                          "https://sweetrip.id/wp-content/uploads/2021/03/adisdermawan_152452974_546949496189026_1105602456210071800_n.jpg",
+                          widget.product.photoUrl!,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -122,7 +133,7 @@ class _ProductCardState extends State<ProductCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Ayam Geprek",
+                        widget.product.name!,
                         style: TextStyle(
                           fontWeight: semibold,
                           color: whiteColor,
@@ -133,7 +144,7 @@ class _ProductCardState extends State<ProductCard> {
                         height: 4.0,
                       ),
                       Text(
-                        "14 orang telah makan ini",
+                        widget.product.type!,
                         style: TextStyle(
                           fontWeight: semibold,
                           fontSize: 12.0,
@@ -144,7 +155,7 @@ class _ProductCardState extends State<ProductCard> {
                         height: 24.0,
                       ),
                       Text(
-                        CurrencyFormat.convertToIdr(8000, 2),
+                        CurrencyFormat.convertToIdr(widget.product.price, 2),
                         style: TextStyle(
                           fontWeight: semibold,
                           color: warningColor,

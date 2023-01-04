@@ -59,10 +59,34 @@ class CartView extends StatefulWidget {
               const SizedBox(
                 height: 30.0,
               ),
-              const ProductCard(isCart: true),
-              const ProductCard(isCart: true),
-              const ProductCard(isCart: true),
-              const ProductCard(isCart: true),
+              StreamBuilder<List<ProductModel>>(
+                stream: ProductService().getProducts(type: "Makanan"),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: snapshot.data!
+                          .map((product) => ProductCard(product, isCart: true))
+                          .toList(),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+              StreamBuilder<List<ProductModel>>(
+                stream: ProductService().getProducts(type: "Minuman"),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: snapshot.data!
+                          .map((product) => ProductCard(product, isCart: true))
+                          .toList(),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ],
           ),
         ),
