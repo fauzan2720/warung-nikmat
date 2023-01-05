@@ -19,7 +19,7 @@ class MainNavigationView extends StatefulWidget {
               color: cardColor,
             ),
             Text(
-              "+4",
+              "+${CartService().totalQuantity()}",
               style: TextStyle(
                 fontWeight: bold,
                 color: cardColor,

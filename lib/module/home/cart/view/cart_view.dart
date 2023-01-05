@@ -59,34 +59,12 @@ class CartView extends StatefulWidget {
               const SizedBox(
                 height: 30.0,
               ),
-              StreamBuilder<List<ProductModel>>(
-                stream: ProductService().getProducts(type: "Makanan"),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: snapshot.data!
-                          .map((product) => ProductCard(product, isCart: true))
-                          .toList(),
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-              StreamBuilder<List<ProductModel>>(
-                stream: ProductService().getProducts(type: "Minuman"),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: snapshot.data!
-                          .map((product) => ProductCard(product, isCart: true))
-                          .toList(),
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
+              Column(
+                children: CartService()
+                    .cart
+                    .map((product) => CartCard(product))
+                    .toList(),
+              )
             ],
           ),
         ),
@@ -113,7 +91,7 @@ class CartView extends StatefulWidget {
                   ),
                 ),
                 Text(
-                  "4",
+                  '${CartService().totalQuantity()}',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: medium,
@@ -137,7 +115,7 @@ class CartView extends StatefulWidget {
                   ),
                 ),
                 Text(
-                  CurrencyFormat.convertToIdr(32000, 2),
+                  CurrencyFormat.convertToIdr(CartService().totalPayment(), 2),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: medium,
@@ -161,11 +139,13 @@ class CartView extends StatefulWidget {
                   ),
                 ),
                 Text(
-                  CurrencyFormat.convertToIdr(55000, 2),
+                  CurrencyFormat.convertToIdr(35110, 2),
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: medium,
-                    color: secondaryColor,
+                    color: CartService().totalPayment() <= 35110
+                        ? secondaryColor
+                        : Colors.red[700],
                   ),
                 ),
               ],
@@ -175,7 +155,13 @@ class CartView extends StatefulWidget {
             ),
             FozPrimaryButton(
               label: 'Pesan Sekarang',
-              onPressed: () {},
+              onPressed: () {
+                if (CartService().totalPayment() <= 35110) {
+                  print('execute this');
+                } else {
+                  showAlert("Oppsss", "Point anda tidak mencukupi");
+                }
+              },
             ),
           ],
         ),

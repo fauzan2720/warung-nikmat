@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:warung_nikmat/services/wishlist_service.dart';
 import '/core.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(
     this.product, {
     super.key,
-    this.isCart = false,
     this.isAdmin = false,
   });
   final ProductModel product;
-  final bool isCart;
   final bool isAdmin;
 
   @override
@@ -29,19 +26,18 @@ class _ProductCardState extends State<ProductCard> {
         color: cardColor,
       ),
       child: Slidable(
-        endActionPane: widget.isCart || widget.isAdmin
+        endActionPane: widget.isAdmin
             ? ActionPane(
                 extentRatio: widget.isAdmin ? 0.3 : 0.18,
                 motion: const StretchMotion(),
                 children: [
-                  if (widget.isAdmin)
-                    SlidableAction(
-                      onPressed: (context) =>
-                          Get.to(EditProductView(widget.product)),
-                      backgroundColor: warningColor,
-                      foregroundColor: whiteColor,
-                      icon: Icons.edit,
-                    ),
+                  SlidableAction(
+                    onPressed: (context) =>
+                        Get.to(EditProductView(widget.product)),
+                    backgroundColor: warningColor,
+                    foregroundColor: whiteColor,
+                    icon: Icons.edit,
+                  ),
                   SlidableAction(
                     borderRadius: BorderRadius.horizontal(
                       right: Radius.circular(radiusPrimarySize),
@@ -84,7 +80,15 @@ class _ProductCardState extends State<ProductCard> {
                       bottomRight: Radius.circular(radiusPrimarySize),
                     ),
                     onPressed: (context) {
-                      print('Add to Cart OK!');
+                      CartService().addCart(
+                        id: widget.product.id!,
+                        name: widget.product.name!,
+                        price: widget.product.price.toString(),
+                        type: widget.product.type!,
+                        photoUrl: widget.product.photoUrl!,
+                      );
+                      MainNavigationController.instance.setState(() {});
+                      showSuccess();
                     },
                     backgroundColor: warningColor,
                     foregroundColor: whiteColor,
@@ -166,36 +170,6 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                 ],
               ),
-              widget.isCart
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.remove_circle,
-                            color: warningColor,
-                            size: 32.0,
-                          ),
-                        ),
-                        Text(
-                          "2",
-                          style: TextStyle(
-                            fontWeight: semibold,
-                            color: secondaryColor,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.add_circle,
-                            color: warningColor,
-                            size: 32.0,
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
             ],
           ),
         ),

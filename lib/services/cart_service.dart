@@ -7,95 +7,77 @@ class CartService {
     await mainStorage.put("cart", cart);
   }
 
-  getCart() async {
-    cart = await mainStorage.get("cart") ?? [];
+  isCart(String id) {
+    if (cart.indexWhere((element) => element["id"] == id) == -1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   addCart({
     required String id,
     required String name,
-    required double weight,
-    required int point,
+    required String price,
+    required String type,
     required String photoUrl,
   }) {
-    cart.add({
-      "id": id,
-      "_name": name,
-      "weight": weight,
-      "point": point,
-      "photo_url": photoUrl,
-    });
+    if (!isCart(id)) {
+      cart.add({
+        "id": id,
+        "name": name,
+        "price": price,
+        "type": type,
+        "photoUrl": photoUrl,
+        "quantity": 1,
+      });
+    } else {
+      addQuantity(id);
+    }
+
     saveToLocalStorage();
+    print('Successfully: $cart');
   }
 
-  updateCart({
-    required String id,
-    required String name,
-    required double weight,
-    required int point,
-    required String photoUrl,
-  }) {
-    // var targetIndex = cart.indexWhere(() => ["id"] == id);
-    // cart[targetIndex] = {
-    //   "id": id,
-    //   "_name": name,
-    //   "weight": weight,
-    //   "point": point,
-    //   "photo_url": photoUrl,
-    // };
+  removeCart(String id) {
+    cart.removeWhere((element) => element["id"] == id);
     saveToLocalStorage();
+    print('Successfully: $cart');
   }
 
-  deleteCart({
-    required String id,
-  }) {
-    // cart.removeWhere(() => ["id"] == id);
+  addQuantity(String id) {
+    var targetIndex = cart.indexWhere((waste) => waste["id"] == id);
+    cart[targetIndex]["quantity"]++;
     saveToLocalStorage();
+    print('Successfully: $cart');
   }
 
-  // is(Model product) {
-  //   if (Cart
-  //           .indexWhere((element) => element["photo_url"] == product.photoUrl) >
-  //       -1) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
-  addWeight(Map<dynamic, dynamic> item) {
-    {
-      item["weight"] += 1 / 4;
-      item["point"] = 250 * item["weight"];
-
-      CartService().saveToLocalStorage();
+  reduceQuantity(String id) {
+    var targetIndex = cart.indexWhere((waste) => waste["id"] == id);
+    if (cart[targetIndex]["quantity"] > 1) {
+      cart[targetIndex]["quantity"]--;
+      saveToLocalStorage();
+      print('Successfully: $cart');
     }
   }
 
-  reduceWeight(Map<dynamic, dynamic> item) async {
-    item["weight"] -= 1 / 4;
-    item["point"] = 250 * item["weight"];
-
-    CartService().saveToLocalStorage();
-  }
-
-  double totalWeight() {
-    double totalWeight = 0;
+  int totalQuantity() {
+    double totalQuantity = 0;
 
     for (var i = 0; i < cart.length; i++) {
-      totalWeight += cart[i]["weight"];
+      totalQuantity += cart[i]["quantity"];
     }
 
-    return totalWeight;
+    return totalQuantity.toInt();
   }
 
-  double totalPoint() {
-    double totalPoint = 0;
+  double totalPayment() {
+    double totalPayment = 0;
 
     for (var i = 0; i < cart.length; i++) {
-      totalPoint += cart[i]["point"];
+      totalPayment += (double.parse(cart[i]["price"]) * cart[i]["quantity"]);
     }
 
-    return totalPoint;
+    return totalPayment;
   }
 }

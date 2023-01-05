@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:warung_nikmat/services/wishlist_service.dart';
 import '/core.dart';
 
 class WishlistCard extends StatefulWidget {
@@ -45,7 +44,15 @@ class _WishlistCardState extends State<WishlistCard> {
                 bottomRight: Radius.circular(radiusPrimarySize),
               ),
               onPressed: (context) {
-                print('Add to Cart OK!');
+                CartService().addCart(
+                  id: widget.product["id"],
+                  name: widget.product["name"],
+                  price: widget.product["price"].toString(),
+                  type: widget.product["type"],
+                  photoUrl: widget.product["photoUrl"],
+                );
+                MainNavigationController.instance.setState(() {});
+                showSuccess();
               },
               backgroundColor: warningColor,
               foregroundColor: whiteColor,
