@@ -36,14 +36,14 @@ class HistoryCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: radiusPrimary,
-                      color: const Color(0xffFFBFBF),
+                      color: primaryColor,
                     ),
                     child: Text(
                       "Selesai",
                       style: TextStyle(
                         fontSize: 11.0,
                         fontWeight: medium,
-                        color: successColor,
+                        color: whiteColor,
                       ),
                     ),
                   ),
@@ -58,6 +58,9 @@ class HistoryCard extends StatelessWidget {
               ),
             ),
             Divider(color: lightColor),
+            const SizedBox(
+              height: 4.0,
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 10.0),
               child: Row(
@@ -65,13 +68,25 @@ class HistoryCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      ClipRRect(
-                        borderRadius: radiusPrimary,
-                        child: Image.network(
-                          "https://i.ibb.co/PGv8ZzG/me.jpg",
-                          width: 50.0,
-                          height: 50.0,
-                          fit: BoxFit.cover,
+                      Container(
+                        height: 50.0,
+                        width: 50.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: whiteColor,
+                              spreadRadius: 4.0,
+                              blurRadius: 2.0,
+                              blurStyle: BlurStyle.outer,
+                            )
+                          ],
+                          borderRadius: radiusPrimary,
+                          image: const DecorationImage(
+                            image: NetworkImage(
+                              "https://portalmadura.com/wp-content/uploads/2020/03/geprek.jpg",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(
