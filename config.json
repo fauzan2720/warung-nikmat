@@ -9,6 +9,7 @@
         "home/cart",
         "home/wishlist",
         "home/profile",
+        "home/edit_profile",
         "admin/home_admin",
         "admin/add_product",
         "admin/edit_product",

@@ -19,6 +19,8 @@ export 'package:warung_nikmat/module/auth/login/controller/login_controller.dart
 export 'package:warung_nikmat/module/auth/login/view/login_view.dart';
 export 'package:warung_nikmat/module/home/cart/controller/cart_controller.dart';
 export 'package:warung_nikmat/module/home/cart/view/cart_view.dart';
+export 'package:warung_nikmat/module/home/edit_profile/controller/edit_profile_controller.dart';
+export 'package:warung_nikmat/module/home/edit_profile/view/edit_profile_view.dart';
 export 'package:warung_nikmat/module/home/history/controller/history_controller.dart';
 export 'package:warung_nikmat/module/home/history/view/history_view.dart';
 export 'package:warung_nikmat/module/home/home/controller/home_controller.dart';

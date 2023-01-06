@@ -14,6 +14,7 @@ class FozImagePicker extends StatefulWidget {
   final bool obscure;
   final Function(String) onChanged;
   final String? provider;
+  final bool gallery;
 
   const FozImagePicker({
     Key? key,
@@ -24,6 +25,7 @@ class FozImagePicker extends StatefulWidget {
     required this.onChanged,
     this.obscure = false,
     this.provider = "cloudinary",
+    this.gallery = false,
   }) : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class _FozImagePickerState extends State<FozImagePicker> {
 
   Future<String?> getFileAndroidIosAndWeb() async {
     XFile? image = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: widget.gallery ? ImageSource.gallery : ImageSource.camera,
       imageQuality: 40,
     );
     String? filePath = image?.path;
@@ -147,7 +149,7 @@ class _FozImagePickerState extends State<FozImagePicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
       decoration: BoxDecoration(
         borderRadius: radiusPrimary,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
@@ -19,61 +20,62 @@ class ProfileView extends StatefulWidget {
             ),
 
             // MY PROFILE
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-              decoration: BoxDecoration(
-                borderRadius: radiusPrimary,
-                color: cardColor,
-              ),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Image.network(
-                      "${FirebaseAuthService().user.photoURL}",
-                      width: 64.0,
-                      height: 64.0,
-                    ),
+            StreamBuilder<DocumentSnapshot<Object?>>(
+              stream: userCollection.snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) return const Text("Error");
+                if (!snapshot.hasData) return const Text("No Data");
+
+                Map<String, dynamic> item =
+                    (snapshot.data!.data() as Map<String, dynamic>);
+
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 15.0),
+                  decoration: BoxDecoration(
+                    borderRadius: radiusPrimary,
+                    color: cardColor,
                   ),
-                  const SizedBox(
-                    width: 20.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        '${FirebaseAuthService().user.displayName}',
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: semibold,
-                          color: secondaryColor,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Image.network(
+                          "${item["photo"]}",
+                          width: 64.0,
+                          height: 64.0,
                         ),
                       ),
                       const SizedBox(
-                        height: 8.0,
+                        width: 20.0,
                       ),
-                      StreamBuilder<DocumentSnapshot<Object?>>(
-                          stream: userCollection.snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) return const Text("Error");
-                            if (!snapshot.hasData) return const Text("No Data");
-
-                            Map<String, dynamic> item =
-                                (snapshot.data!.data() as Map<String, dynamic>);
-
-                            return Text(
-                              CurrencyFormat.convertToIdr(item["point"], 2),
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: secondaryColor,
-                              ),
-                            );
-                          }),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${item["name"]}',
+                            style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: semibold,
+                              color: secondaryColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            CurrencyFormat.convertToIdr(item["point"], 2),
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: secondaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
 
             // CONTAINER 1
@@ -88,8 +90,8 @@ class ProfileView extends StatefulWidget {
               child: Column(
                 children: [
                   FozMenuButton(
-                    label: 'Lihat Profil',
-                    onTap: () {},
+                    label: 'Perbarui Profil',
+                    onTap: () => Get.to(const EditProfileView()),
                     icon: Icon(
                       Icons.person_outline,
                       color: secondaryColor,

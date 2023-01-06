@@ -23,6 +23,18 @@ class UserService {
     }
   }
 
+  static updateUser({
+    required String name,
+    required String phoneNumber,
+    required String photoUrl,
+  }) async {
+    await userCollection.set({
+      "name": name,
+      "phone_number": phoneNumber,
+      "photo": photoUrl,
+    }, SetOptions(merge: true));
+  }
+
   static updatePoint({
     required double point,
   }) async {
