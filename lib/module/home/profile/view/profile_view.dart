@@ -89,7 +89,8 @@ class ProfileView extends StatefulWidget {
                   ),
                   FozMenuButton(
                     label: 'Wishlist',
-                    onTap: () => Get.to(const WishlistView()),
+                    onTap: () =>
+                        MainNavigationController.instance.onItemTapped(2),
                     icon: Icon(
                       Icons.favorite_outline,
                       color: secondaryColor,
@@ -100,7 +101,8 @@ class ProfileView extends StatefulWidget {
                   ),
                   FozMenuButton(
                     label: 'Lihat Pesanan',
-                    onTap: () => Get.to(const HistoryView()),
+                    onTap: () =>
+                        MainNavigationController.instance.onItemTapped(1),
                     icon: Icon(
                       Icons.shopping_bag_outlined,
                       color: secondaryColor,

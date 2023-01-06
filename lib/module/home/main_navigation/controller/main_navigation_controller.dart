@@ -8,9 +8,7 @@ class MainNavigationController extends State<MainNavigationView>
 
   List<Widget> widgetOptions = <Widget>[
     const HomeView(),
-    const Center(
-      child: Text("History View"),
-    ),
+    const HistoryView(),
     const WishlistView(),
     const ProfileView(),
   ];

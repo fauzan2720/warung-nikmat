@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.mulishTextTheme(
           Theme.of(context).textTheme,
         ),
-        appBarTheme: AppBarTheme(backgroundColor: primaryColor),
+        appBarTheme: AppBarTheme(backgroundColor: backgroundColor),
       ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuthService().authState,

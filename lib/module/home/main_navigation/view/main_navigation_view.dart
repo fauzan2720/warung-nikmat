@@ -9,7 +9,13 @@ class MainNavigationView extends StatefulWidget {
 
     Widget cartButton() {
       return FloatingActionButton(
-        onPressed: () => Get.to(const CartView()),
+        onPressed: () {
+          if (CartService().totalQuantity() > 0) {
+            Get.to(const CartView());
+          } else {
+            showAlert("Oppsss", "Tidak ada menu yang akan dipesan");
+          }
+        },
         backgroundColor: lightColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

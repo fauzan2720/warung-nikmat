@@ -156,7 +156,10 @@ class CartView extends StatefulWidget {
             FozPrimaryButton(
               label: 'Pesan Sekarang',
               onPressed: () {
-                if (CartService().totalPayment() <= 35110) {
+                if (CartService().totalQuantity() == 0) {
+                  Get.back();
+                  showAlert("Oppsss", "Tidak ada menu yang dipesan");
+                } else if (CartService().totalPayment() <= 35110) {
                   print('execute this');
                 } else {
                   showAlert("Oppsss", "Point anda tidak mencukupi");

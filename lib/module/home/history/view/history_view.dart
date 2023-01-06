@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
-import '../controller/history_controller.dart';
+import 'package:warung_nikmat/shared/widget/card/history_card.dart';
+import 'package:warung_nikmat/shared/widget/is_empty.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -11,16 +12,21 @@ class HistoryView extends StatefulWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("History"),
-        actions: const [],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: const [],
-          ),
-        ),
-      ),
+      body: WishlistService().wishlist.isEmpty
+          ? const IsEmpty()
+          : SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: const [
+                    HistoryCard(),
+                    HistoryCard(),
+                    HistoryCard(),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 
