@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '/core.dart';
 
-void showSuccess() {
+void showSuccess({String? message}) {
   Alert(
     context: Get.currentContext,
     type: AlertType.success,
-    title: "Berhasil",
+    title: message ?? "Berhasil",
     buttons: [
       DialogButton(
         color: Colors.greenAccent[700],

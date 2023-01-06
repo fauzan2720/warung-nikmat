@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
 
@@ -138,16 +139,29 @@ class CartView extends StatefulWidget {
                     color: secondaryColor,
                   ),
                 ),
-                Text(
-                  CurrencyFormat.convertToIdr(35110, 2),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: CartService().totalPayment() <= 35110
-                        ? secondaryColor
-                        : Colors.red[700],
-                  ),
-                ),
+                StreamBuilder<DocumentSnapshot<Object?>>(
+                    stream: userCollection.snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) return const Text("Error");
+                      if (!snapshot.hasData) return const Text("No Data");
+
+                      Map<String, dynamic> item =
+                          (snapshot.data!.data() as Map<String, dynamic>);
+
+                      controller.yourpoint =
+                          double.parse(item["point"].toString());
+
+                      return Text(
+                        CurrencyFormat.convertToIdr(controller.yourpoint, 2),
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: medium,
+                          color: CartService().totalPayment() <= item["point"]
+                              ? secondaryColor
+                              : Colors.red[700],
+                        ),
+                      );
+                    }),
               ],
             ),
             const SizedBox(
@@ -159,7 +173,8 @@ class CartView extends StatefulWidget {
                 if (CartService().totalQuantity() == 0) {
                   Get.back();
                   showAlert("Oppsss", "Tidak ada menu yang dipesan");
-                } else if (CartService().totalPayment() <= 35110) {
+                } else if (CartService().totalPayment() <=
+                    controller.yourpoint) {
                   print('execute this');
                 } else {
                   showAlert("Oppsss", "Point anda tidak mencukupi");

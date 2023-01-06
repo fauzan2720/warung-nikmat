@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:warung_nikmat/state_util.dart';
-import '../view/home_admin_view.dart';
+import 'package:warung_nikmat/core.dart';
 
 class HomeAdminController extends State<HomeAdminView>
     implements MvcController {
@@ -40,6 +39,13 @@ class HomeAdminController extends State<HomeAdminView>
   void handleFilterChart(int index) {
     currentFilterChart = index;
     setState(() {});
+  }
+
+  void doLogout() {
+    showConfirmation(onPressed: () {
+      mainStorage.clear();
+      Get.offAll(const SplashScreenView());
+    });
   }
 
   @override

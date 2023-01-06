@@ -6,6 +6,8 @@ class CartController extends State<CartView> implements MvcController {
   static late CartController instance;
   late CartView view;
 
+  double yourpoint = 0.0;
+
   @override
   void initState() {
     instance = this;

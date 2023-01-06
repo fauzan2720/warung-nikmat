@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
-import 'package:warung_nikmat/shared/widget/card/history_card.dart';
-import 'package:warung_nikmat/shared/widget/is_empty.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);

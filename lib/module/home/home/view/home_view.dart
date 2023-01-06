@@ -82,9 +82,9 @@ class HomeView extends StatefulWidget {
                     color: cardColor,
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () => controller.scanQrCode(),
                     icon: Icon(
-                      Icons.qr_code_2_rounded,
+                      Icons.qr_code_scanner_rounded,
                       color: secondaryColor,
                     ),
                   ),

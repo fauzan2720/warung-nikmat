@@ -20,7 +20,13 @@ class SplashScreenController extends State<SplashScreenView>
   void getInit() {
     Future.delayed(
       const Duration(milliseconds: 1500),
-      () => Get.put(const LoginView()),
+      () {
+        if (SessionManager().isLogin) {
+          Get.put(const HomeAdminView());
+        } else {
+          Get.put(const LoginView());
+        }
+      },
     );
   }
 

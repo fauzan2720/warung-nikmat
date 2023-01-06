@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
-import 'package:warung_nikmat/shared/widget/is_empty.dart';
 
 class WishlistView extends StatefulWidget {
   const WishlistView({Key? key}) : super(key: key);

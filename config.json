@@ -11,6 +11,7 @@
         "home/profile",
         "admin/home_admin",
         "admin/add_product",
-        "admin/edit_product"
+        "admin/edit_product",
+        "admin/top_up"
     ]
 }

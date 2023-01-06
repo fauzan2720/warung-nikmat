@@ -19,6 +19,7 @@ class LoginController extends State<LoginView> implements MvcController {
   doLoginAdmin() {
     if (email == 'warungnikmat@gmail.com') {
       if (password == '123123123') {
+        SessionManager().saveLogin();
         Get.offAll(const HomeAdminView());
       } else {
         showAlert("Oppsss", "Password salah");

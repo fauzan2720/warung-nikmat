@@ -23,19 +23,23 @@ class UserService {
     }
   }
 
-  // static updatePoint({
-  //   required double point,
-  // }) async {
-  //   await userCollection.update({
-  //     "point": FieldValue.increment(point),
-  //   });
-  // }
+  static updatePoint({
+    required double point,
+  }) async {
+    await userCollection.update({
+      "point": FieldValue.increment(point),
+    });
+  }
 
-  // static getUserData() {
-  //   return {
-  //     "id": FirebaseAuth.instance.currentUser!.uid,
-  //     "email": FirebaseAuth.instance.currentUser!.email,
-  //     "name": FirebaseAuth.instance.currentUser!.displayName,
-  //   };
-  // }
+  static Map<String, dynamic> getUserData() {
+    Map<String, dynamic> data = {
+      "id": FirebaseAuth.instance.currentUser!.uid,
+      "name": FirebaseAuth.instance.currentUser!.displayName,
+      "email": FirebaseAuth.instance.currentUser!.email,
+      "phone_number": FirebaseAuth.instance.currentUser!.phoneNumber,
+      "photo": FirebaseAuth.instance.currentUser!.photoURL,
+    };
+
+    return data;
+  }
 }

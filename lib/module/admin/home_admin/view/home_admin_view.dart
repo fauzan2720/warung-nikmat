@@ -43,8 +43,7 @@ class HomeAdminView extends StatefulWidget {
                     ],
                   ),
                   IconButton(
-                    onPressed: () => showConfirmation(
-                        onPressed: () => Get.offAll(const SplashScreenView())),
+                    onPressed: () => controller.doLogout(),
                     icon: const Icon(Icons.logout),
                     color: Colors.red[700],
                   ),
@@ -108,8 +107,10 @@ class HomeAdminView extends StatefulWidget {
                 children: [
                   menuButton("Tambah", Icons.add,
                       () => Get.to(const AddProductView())),
-                  menuButton("Top Up", Icons.add_card, () {}),
-                  menuButton("QR Code", Icons.qr_code_2, () {}),
+                  menuButton("Top Up", Icons.add_card,
+                      () => Get.to(const TopUpView())),
+                  menuButton("QR Code", Icons.qr_code_2,
+                      () => showMyQrCode("Klaim poin user")),
                   menuButton("Riwayat", Icons.trending_up, () {}),
                 ],
               ),

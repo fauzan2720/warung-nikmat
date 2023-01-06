@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
 
@@ -52,13 +53,23 @@ class ProfileView extends StatefulWidget {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      Text(
-                        "0 Poin",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: secondaryColor,
-                        ),
-                      ),
+                      StreamBuilder<DocumentSnapshot<Object?>>(
+                          stream: userCollection.snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) return const Text("Error");
+                            if (!snapshot.hasData) return const Text("No Data");
+
+                            Map<String, dynamic> item =
+                                (snapshot.data!.data() as Map<String, dynamic>);
+
+                            return Text(
+                              CurrencyFormat.convertToIdr(item["point"], 2),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: secondaryColor,
+                              ),
+                            );
+                          }),
                     ],
                   ),
                 ],
@@ -81,6 +92,17 @@ class ProfileView extends StatefulWidget {
                     onTap: () {},
                     icon: Icon(
                       Icons.person_outline,
+                      color: secondaryColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  FozMenuButton(
+                    label: 'Top Up Poin',
+                    onTap: () => HomeController.instance.scanQrCode(),
+                    icon: Icon(
+                      Icons.add_card,
                       color: secondaryColor,
                     ),
                   ),
@@ -113,7 +135,8 @@ class ProfileView extends StatefulWidget {
                   ),
                   FozMenuButton(
                     label: 'Hubungi Penjual',
-                    onTap: () {},
+                    onTap: () => GoToWhatsApp().launchWhatsApp(
+                        "Hallo kak, perkenalkan saya ${FirebaseAuthService().user.displayName}.\n"),
                     icon: Icon(
                       Icons.call_outlined,
                       color: secondaryColor,
