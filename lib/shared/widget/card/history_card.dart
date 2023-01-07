@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '/core.dart';
 
 class HistoryCard extends StatelessWidget {
-  const HistoryCard({
+  const HistoryCard(
+    this.history, {
     super.key,
-    // required this.history,
   });
-  // final ProductModel history;
+  final dynamic history;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => Get.to(HistoryDetailView(history: history)),
+      onTap: () => Get.to(OrderDetailView(history)),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 7.0, horizontal: horizontalSize),
         decoration: BoxDecoration(
@@ -36,10 +36,12 @@ class HistoryCard extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: radiusPrimary,
-                      color: primaryColor,
+                      color: history["status"] == "Selesai"
+                          ? primaryColor
+                          : warningColor,
                     ),
                     child: Text(
-                      "Selesai",
+                      "${history["status"]}",
                       style: TextStyle(
                         fontSize: 11.0,
                         fontWeight: medium,
@@ -48,7 +50,7 @@ class HistoryCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "2 item",
+                    "${history["quantity"]} item",
                     style: TextStyle(
                       fontSize: 11.0,
                       color: secondaryColor,
@@ -81,9 +83,9 @@ class HistoryCard extends StatelessWidget {
                             )
                           ],
                           borderRadius: radiusPrimary,
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             image: NetworkImage(
-                              "https://portalmadura.com/wp-content/uploads/2020/03/geprek.jpg",
+                              "${history["products"][0]["photoUrl"]}",
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -98,7 +100,9 @@ class HistoryCard extends StatelessWidget {
                           SizedBox(
                             width: Get.width - 280.0,
                             child: Text(
-                              '{history.name}',
+                              history["quantity"] > 1
+                                  ? '${history["products"][0]["name"]}...'
+                                  : '${history["products"][0]["name"]}',
                               style: TextStyle(
                                 fontSize: 15.0,
                                 fontWeight: medium,
@@ -111,7 +115,7 @@ class HistoryCard extends StatelessWidget {
                             height: 4.0,
                           ),
                           Text(
-                            "{history.price} Point",
+                            "${history["total_payment"]} Point",
                             style: TextStyle(
                               fontSize: 12.0,
                               color: secondaryColor,

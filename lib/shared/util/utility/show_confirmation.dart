@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '/core.dart';
 
-void showConfirmation({required void Function() onPressed}) async {
+void showConfirmation({
+  required void Function() onPressed,
+  Color? color,
+}) async {
   bool confirm = false;
   await showDialog<void>(
     context: Get.currentContext,
@@ -28,7 +31,7 @@ void showConfirmation({required void Function() onPressed}) async {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red[700],
+              backgroundColor: color ?? Colors.red[700],
             ),
             onPressed: () {
               confirm = true;

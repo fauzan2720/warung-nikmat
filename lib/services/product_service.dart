@@ -13,7 +13,7 @@ class ProductService {
           .snapshots()
           .map((QuerySnapshot list) {
         var result = list.docs.map<ProductModel>((DocumentSnapshot message) {
-          print(message.data());
+          // print(message.data());
           return ProductModel.fromJson(message.data() as Map<String, dynamic>);
         }).toList();
 

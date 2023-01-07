@@ -45,6 +45,10 @@ class CartService {
     print('Successfully: $cart');
   }
 
+  emptyCart() {
+    mainStorage.put("cart", []);
+  }
+
   addQuantity(String id) {
     var targetIndex = cart.indexWhere((waste) => waste["id"] == id);
     cart[targetIndex]["quantity"]++;
