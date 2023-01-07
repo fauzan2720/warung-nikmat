@@ -111,6 +111,17 @@ class ProfileView extends StatefulWidget {
                     height: 30.0,
                   ),
                   FozMenuButton(
+                    label: 'Riwayat Poin',
+                    onTap: () => Get.to(const HistoryPointView()),
+                    icon: Icon(
+                      Icons.monetization_on,
+                      color: secondaryColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  FozMenuButton(
                     label: 'Wishlist',
                     onTap: () =>
                         MainNavigationController.instance.onItemTapped(2),

@@ -15,6 +15,18 @@ class HistoryView extends StatefulWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("History"),
+          actions: [
+            IconButton(
+              onPressed: () => Get.to(const HistoryPointView()),
+              icon: Icon(
+                Icons.monetization_on,
+                color: secondaryColor,
+              ),
+            ),
+            const SizedBox(
+              width: 5.0,
+            ),
+          ],
           bottom: TabBar(
             labelColor: secondaryColor,
             indicatorColor: strokeColor,

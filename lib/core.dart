@@ -3,6 +3,8 @@ We believe, the class name must be unique.
 If there is a conflicting class name in this file,
 it means you have to rename it to something more unique.
 */
+export 'package:warung_nikmat/models/order_model.dart';
+export 'package:warung_nikmat/models/point_model.dart';
 export 'package:warung_nikmat/models/product_model.dart';
 export 'package:warung_nikmat/module/admin/add_product/controller/add_product_controller.dart';
 export 'package:warung_nikmat/module/admin/add_product/view/add_product_view.dart';
@@ -23,6 +25,8 @@ export 'package:warung_nikmat/module/home/edit_profile/controller/edit_profile_c
 export 'package:warung_nikmat/module/home/edit_profile/view/edit_profile_view.dart';
 export 'package:warung_nikmat/module/home/history/controller/history_controller.dart';
 export 'package:warung_nikmat/module/home/history/view/history_view.dart';
+export 'package:warung_nikmat/module/home/history_point/controller/history_point_controller.dart';
+export 'package:warung_nikmat/module/home/history_point/view/history_point_view.dart';
 export 'package:warung_nikmat/module/home/home/controller/home_controller.dart';
 export 'package:warung_nikmat/module/home/home/view/home_view.dart';
 export 'package:warung_nikmat/module/home/main_navigation/controller/main_navigation_controller.dart';

@@ -6,6 +6,7 @@
         "home/main_navigation",
         "home/home",
         "home/history",
+        "home/history_point",
         "home/cart",
         "home/order_detail",
         "home/wishlist",
