@@ -44,6 +44,7 @@ class EditProductView extends StatefulWidget {
                 },
               ),
               FozImagePicker(
+                gallery: true,
                 value: controller.photoUrl,
                 label: 'Foto',
                 onChanged: (value) {

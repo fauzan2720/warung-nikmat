@@ -52,25 +52,44 @@ class HomeAdminView extends StatefulWidget {
               const SizedBox(
                 height: 30.0,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
-                decoration: BoxDecoration(
-                  borderRadius: radiusPrimary,
-                  color: cardColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    filterChart(0, "Minggu"),
-                    filterChart(1, "Bulan"),
-                    filterChart(2, "Tahun"),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              // Container(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+              //   decoration: BoxDecoration(
+              //     borderRadius: radiusPrimary,
+              //     color: cardColor,
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //     children: [
+              //       filterChart(0, "Minggu"),
+              //       filterChart(1, "Bulan"),
+              //       filterChart(2, "Tahun"),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20.0,
+              // ),
+              // StreamBuilder<List<Map<String, dynamic>>>(
+              //   stream: controller.getHistories(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       return Column(
+              //         children: snapshot.data!.map((event) {
+              //           // print(chartData[0].x);
+              //           // return const SizedBox();
+              //           return Text(
+              //             "${event["updated_at"]} - ${event["quantity"]}",
+              //             style: const TextStyle(color: Colors.white),
+              //           );
+              //         }).toList(),
+              //       );
+              //     } else {
+              //       return const Center(child: CircularProgressIndicator());
+              //     }
+              //   },
+              // ),
               Container(
                 height: 250.0,
                 padding:
@@ -109,7 +128,7 @@ class HomeAdminView extends StatefulWidget {
                       () => Get.to(const AddProductView())),
                   menuButton("Top Up", Icons.add_card,
                       () => Get.to(const TopUpView())),
-                  menuButton("QR Code", Icons.qr_code_2,
+                  menuButton("Klaim", Icons.monetization_on,
                       () => showMyQrCode("Klaim poin user")),
                   menuButton("Riwayat", Icons.trending_up, () {}),
                 ],

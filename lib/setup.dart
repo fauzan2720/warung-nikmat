@@ -19,4 +19,8 @@ Future initialize() async {
   var path = await getTemporaryDirectory();
   Hive.init(path.path);
   mainStorage = await Hive.openBox('mainStorage');
+
+  ChartService.getHistories().listen(
+    (event) => ChartService.chart = event,
+  );
 }

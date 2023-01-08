@@ -39,6 +39,7 @@ class AddProductView extends StatefulWidget {
                 },
               ),
               FozImagePicker(
+                gallery: true,
                 label: 'Foto',
                 onChanged: (value) {
                   controller.photoUrl = value;

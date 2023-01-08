@@ -11,15 +11,7 @@ class HomeAdminController extends State<HomeAdminView>
   int currentFilter = 0;
 
   late TooltipBehavior tooltipBehavior;
-  final List<ChartData> chartData = [
-    ChartData('H-6', 22),
-    ChartData('H-5', 17),
-    ChartData('H-4', 30),
-    ChartData('H-3', 8),
-    ChartData('H-2', 23),
-    ChartData('H-1', 16),
-    ChartData('H', 18)
-  ];
+  List<ChartData> chartData = ChartService.chart;
 
   void handleFilter(int index) {
     currentFilter = index;

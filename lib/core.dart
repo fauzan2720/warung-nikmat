@@ -40,6 +40,7 @@ export 'package:warung_nikmat/module/home/wishlist/view/wishlist_view.dart';
 export 'package:warung_nikmat/module/splash_screen/controller/splash_screen_controller.dart';
 export 'package:warung_nikmat/module/splash_screen/view/splash_screen_view.dart';
 export 'package:warung_nikmat/services/cart_service.dart';
+export 'package:warung_nikmat/services/chart_service.dart';
 export 'package:warung_nikmat/services/firebase_auth_service.dart';
 export 'package:warung_nikmat/services/order_service.dart';
 export 'package:warung_nikmat/services/point_service.dart';
