@@ -11,7 +11,7 @@ class ChartService {
     try {
       return FirebaseFirestore.instance
           .collection('orders')
-          .orderBy("updated_at", descending: true)
+          .where("status", isEqualTo: "Selesai")
           .snapshots()
           .map((QuerySnapshot list) {
         var result =
@@ -20,6 +20,7 @@ class ChartService {
         }).toList();
 
         listItem.clear();
+        result.sort((b, a) => a["updated_at"].compareTo(b["updated_at"]));
 
         result.map((item) {
           String isDateEvent =

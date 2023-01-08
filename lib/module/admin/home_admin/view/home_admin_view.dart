@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:warung_nikmat/core.dart';
+import 'package:warung_nikmat/shared/widget/card/new_order.dart';
 
 class HomeAdminView extends StatefulWidget {
   const HomeAdminView({Key? key}) : super(key: key);
@@ -50,7 +52,30 @@ class HomeAdminView extends StatefulWidget {
                 ],
               ),
               const SizedBox(
-                height: 30.0,
+                height: 20.0,
+              ),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("orders")
+                    .where("status", isEqualTo: "Dalam Proses")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) return const Text("Error");
+                  if (snapshot.data == null) return Container();
+                  if (snapshot.data!.docs.isEmpty) return const SizedBox();
+                  final data = snapshot.data!;
+                  return Column(
+                    children: data.docs.map((event) {
+                      Map<String, dynamic> item =
+                          (event.data() as Map<String, dynamic>);
+
+                      return NewOrderCard(item);
+                    }).toList(),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10.0,
               ),
               // Container(
               //   padding:
@@ -70,25 +95,6 @@ class HomeAdminView extends StatefulWidget {
               // ),
               // const SizedBox(
               //   height: 20.0,
-              // ),
-              // StreamBuilder<List<Map<String, dynamic>>>(
-              //   stream: controller.getHistories(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return Column(
-              //         children: snapshot.data!.map((event) {
-              //           // print(chartData[0].x);
-              //           // return const SizedBox();
-              //           return Text(
-              //             "${event["updated_at"]} - ${event["quantity"]}",
-              //             style: const TextStyle(color: Colors.white),
-              //           );
-              //         }).toList(),
-              //       );
-              //     } else {
-              //       return const Center(child: CircularProgressIndicator());
-              //     }
-              //   },
               // ),
               Container(
                 height: 250.0,

@@ -4,6 +4,7 @@ import '/core.dart';
 void showConfirmation({
   required void Function() onPressed,
   Color? color,
+  String? message,
 }) async {
   bool confirm = false;
   await showDialog<void>(
@@ -14,8 +15,8 @@ void showConfirmation({
         title: const Text('Konfirmasi'),
         content: SingleChildScrollView(
           child: ListBody(
-            children: const <Widget>[
-              Text('Apakah anda yakin ?'),
+            children: <Widget>[
+              Text(message ?? 'Apakah anda yakin ?'),
             ],
           ),
         ),
