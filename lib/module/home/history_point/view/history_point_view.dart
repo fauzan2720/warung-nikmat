@@ -56,19 +56,21 @@ class HistoryPointView extends StatefulWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection("points").snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) return const Text("Error");
-                if (snapshot.data == null) return Container();
-                if (snapshot.data!.docs.isEmpty) {
-                  return const Text("No Data");
-                }
-                final data = snapshot.data!;
-                return Padding(
+        body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("points")
+              .orderBy('created_at', descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) return const Text("Error");
+            if (snapshot.data == null) return Container();
+            if (snapshot.data!.docs.isEmpty) {
+              return const IsEmpty();
+            }
+            final data = snapshot.data!;
+            return TabBarView(
+              children: [
+                Padding(
                   padding: primarySize,
                   child: ListView.builder(
                     itemCount: data.docs.length,
@@ -113,20 +115,8 @@ class HistoryPointView extends StatefulWidget {
                           : const SizedBox();
                     },
                   ),
-                );
-              },
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream:
-                  FirebaseFirestore.instance.collection("points").snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) return const Text("Error");
-                if (snapshot.data == null) return Container();
-                if (snapshot.data!.docs.isEmpty) {
-                  return const Text("No Data");
-                }
-                final data = snapshot.data!;
-                return Padding(
+                ),
+                Padding(
                   padding: primarySize,
                   child: ListView.builder(
                     itemCount: data.docs.length,
@@ -170,10 +160,10 @@ class HistoryPointView extends StatefulWidget {
                           : const SizedBox();
                     },
                   ),
-                );
-              },
-            ),
-          ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );

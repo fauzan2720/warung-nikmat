@@ -20,7 +20,7 @@ class _QrCodeScannerViewState extends State<QrCodeScannerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mobile Scanner')),
+      appBar: AppBar(title: const Text('Scan ke QR Code dikasir')),
       body: MobileScanner(
         allowDuplicates: false,
         onDetect: (barcode, args) {

@@ -38,54 +38,50 @@ class HistoryView extends StatefulWidget {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection("orders").snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("orders")
+              .orderBy('updated_at', descending: true)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) return const Text("Error");
             if (snapshot.data == null) return Container();
             if (snapshot.data!.docs.isEmpty) {
-              return const Text("No Data");
+              return const IsEmpty();
             }
-
-            snapshot.data!.docs
-                .toList()
-                .sort((b, a) => a['updated_at']!.compareTo(b['updated_at']!));
-
             final data = snapshot.data!;
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: data.docs.isEmpty
-                  ? const IsEmpty()
-                  : TabBarView(
-                      children: [
-                        ListView.builder(
-                          itemCount: data.docs.length,
-                          itemBuilder: (context, index) {
-                            Map<String, dynamic> item = (data.docs[index].data()
-                                as Map<String, dynamic>);
+              child: TabBarView(
+                children: [
+                  ListView.builder(
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> item =
+                          (data.docs[index].data() as Map<String, dynamic>);
 
-                            return item["status"] == "Dalam Proses" &&
-                                    item["user"]["id"] ==
-                                        FirebaseAuth.instance.currentUser!.uid
-                                ? HistoryCard(item)
-                                : const SizedBox();
-                          },
-                        ),
-                        ListView.builder(
-                          itemCount: data.docs.length,
-                          itemBuilder: (context, index) {
-                            Map<String, dynamic> item = (data.docs[index].data()
-                                as Map<String, dynamic>);
+                      return item["status"] == "Dalam Proses" &&
+                              item["user"]["id"] ==
+                                  FirebaseAuth.instance.currentUser!.uid
+                          ? HistoryCard(item)
+                          : const SizedBox();
+                    },
+                  ),
+                  ListView.builder(
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> item =
+                          (data.docs[index].data() as Map<String, dynamic>);
 
-                            return item["status"] == "Selesai" &&
-                                    item["user"]["id"] ==
-                                        FirebaseAuth.instance.currentUser!.uid
-                                ? HistoryCard(item)
-                                : const SizedBox();
-                          },
-                        ),
-                      ],
-                    ),
+                      return item["status"] == "Selesai" &&
+                              item["user"]["id"] ==
+                                  FirebaseAuth.instance.currentUser!.uid
+                          ? HistoryCard(item)
+                          : const SizedBox();
+                    },
+                  ),
+                ],
+              ),
             );
           },
         ),
