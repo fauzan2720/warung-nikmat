@@ -100,8 +100,7 @@ class HistoryPointView extends StatefulWidget {
                                       ),
                                     ),
                                     Text(
-                                      CurrencyFormat.convertToIdr(
-                                          item["point"], 2),
+                                      "+${CurrencyFormat.convertToIdr(item["point"], 2)}",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: medium,
