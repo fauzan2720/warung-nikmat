@@ -5,7 +5,7 @@ class LoginController extends State<LoginView> implements MvcController {
   static late LoginController instance;
   late LoginView view;
 
-  String email = 'warungnikmat@gmail.com', password = '123123123';
+  String email = 'warungnikmat@gmail.com', password = '';
 
   @override
   void initState() {
@@ -18,7 +18,7 @@ class LoginController extends State<LoginView> implements MvcController {
 
   doLoginAdmin() {
     if (email == 'warungnikmat@gmail.com') {
-      if (password == '') {
+      if (password == '@warung.nikmat123') {
         SessionManager().saveLogin();
         Get.offAll(const HomeAdminView());
       } else {
