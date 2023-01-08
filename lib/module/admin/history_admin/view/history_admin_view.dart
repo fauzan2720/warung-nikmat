@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warung_nikmat/core.dart';
-import 'package:warung_nikmat/shared/widget/card/top_up_card.dart';
 
 class HistoryAdminView extends StatefulWidget {
   const HistoryAdminView({Key? key}) : super(key: key);
