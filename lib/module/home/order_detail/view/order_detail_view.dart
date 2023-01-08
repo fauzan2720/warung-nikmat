@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
 
 class OrderDetailView extends StatefulWidget {
-  const OrderDetailView(this.history, {Key? key}) : super(key: key);
+  const OrderDetailView(this.history, {Key? key, this.isAdmin = false})
+      : super(key: key);
   final Map<String, dynamic> history;
+  final bool isAdmin;
 
   Widget build(context, OrderDetailController controller) {
     controller.view = this;
@@ -71,9 +73,11 @@ class OrderDetailView extends StatefulWidget {
                       height: 30.0,
                     ),
                     Text(
-                      history["status"] == "Dalam Proses"
-                          ? "Pesanan kamu sedang diproses"
-                          : "Pesanan kamu sudah selesai",
+                      isAdmin
+                          ? "Pesanan ${history["user"]["name"]}"
+                          : history["status"] == "Dalam Proses"
+                              ? "Pesanan kamu sedang diproses"
+                              : "Pesanan kamu sudah selesai",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: semibold,
@@ -84,9 +88,11 @@ class OrderDetailView extends StatefulWidget {
                       height: 20.0,
                     ),
                     Text(
-                      history["status"] == "Dalam Proses"
-                          ? "Enjoy!"
-                          : "Terimakasih",
+                      isAdmin
+                          ? "Selesai"
+                          : history["status"] == "Dalam Proses"
+                              ? "Enjoy!"
+                              : "Terimakasih",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: extrabold,
@@ -122,7 +128,7 @@ class OrderDetailView extends StatefulWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Daftar pesanan kamu",
+                            isAdmin ? "Daftar pesanan" : "Daftar pesanan kamu",
                             style: TextStyle(
                               fontWeight: semibold,
                               color: lightColor,
@@ -212,7 +218,9 @@ class OrderDetailView extends StatefulWidget {
                 label: "Kembali",
                 onPressed: () {
                   Get.back();
-                  MainNavigationController.instance.onItemTapped(1);
+                  if (!isAdmin) {
+                    MainNavigationController.instance.onItemTapped(1);
+                  }
                 },
               ),
             ],

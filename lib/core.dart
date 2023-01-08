@@ -10,6 +10,8 @@ export 'package:warung_nikmat/module/admin/add_product/controller/add_product_co
 export 'package:warung_nikmat/module/admin/add_product/view/add_product_view.dart';
 export 'package:warung_nikmat/module/admin/edit_product/controller/edit_product_controller.dart';
 export 'package:warung_nikmat/module/admin/edit_product/view/edit_product_view.dart';
+export 'package:warung_nikmat/module/admin/history_admin/controller/history_admin_controller.dart';
+export 'package:warung_nikmat/module/admin/history_admin/view/history_admin_view.dart';
 export 'package:warung_nikmat/module/admin/home_admin/controller/home_admin_controller.dart';
 export 'package:warung_nikmat/module/admin/home_admin/view/home_admin_view.dart';
 export 'package:warung_nikmat/module/admin/home_admin/widget/filter_chart.dart';
@@ -71,6 +73,7 @@ export 'package:warung_nikmat/shared/widget/button/primary_button.dart';
 export 'package:warung_nikmat/shared/widget/button/white_button.dart';
 export 'package:warung_nikmat/shared/widget/card/cart_card.dart';
 export 'package:warung_nikmat/shared/widget/card/history_card.dart';
+export 'package:warung_nikmat/shared/widget/card/new_order_card.dart';
 export 'package:warung_nikmat/shared/widget/card/order_card.dart';
 export 'package:warung_nikmat/shared/widget/card/product_card.dart';
 export 'package:warung_nikmat/shared/widget/card/wishlist_card.dart';

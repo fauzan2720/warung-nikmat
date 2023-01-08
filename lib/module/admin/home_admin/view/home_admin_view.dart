@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:warung_nikmat/core.dart';
-import 'package:warung_nikmat/shared/widget/card/new_order.dart';
 
 class HomeAdminView extends StatefulWidget {
   const HomeAdminView({Key? key}) : super(key: key);
@@ -136,7 +135,8 @@ class HomeAdminView extends StatefulWidget {
                       () => Get.to(const TopUpView())),
                   menuButton("Klaim", Icons.monetization_on,
                       () => showMyQrCode("Klaim poin user")),
-                  menuButton("Riwayat", Icons.trending_up, () {}),
+                  menuButton("Riwayat", Icons.trending_up,
+                      () => Get.to(const HistoryAdminView())),
                 ],
               ),
               const SizedBox(

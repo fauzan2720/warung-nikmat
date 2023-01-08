@@ -15,6 +15,7 @@
         "admin/home_admin",
         "admin/add_product",
         "admin/edit_product",
-        "admin/top_up"
+        "admin/top_up",
+        "admin/history_admin"
     ]
 }
