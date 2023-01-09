@@ -131,11 +131,11 @@ class HomeAdminView extends StatefulWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    menuButton("Tambah", Icons.add,
-                        () => Get.to(const AddProductView())),
-                    menuButton("Top Up", Icons.add_card,
-                        () => Get.to(const TopUpView())),
-                    menuButton("Klaim", Icons.monetization_on,
+                    menuButton("Menu", Icons.edit_note,
+                        () => Get.to(const MenuView())),
+                    menuButton("POS", Icons.shopping_bag,
+                        () => Get.to(const CartView(isAdmin: true))),
+                    menuButton("Cashback", Icons.monetization_on,
                         () => showMyQrCode("Klaim poin user")),
                     menuButton("Riwayat", Icons.trending_up,
                         () => Get.to(const HistoryAdminView())),
@@ -187,7 +187,7 @@ class HomeAdminView extends StatefulWidget {
                             return Column(
                               children: snapshot.data!
                                   .map((product) =>
-                                      ProductCard(product, isAdmin: true))
+                                      ProductCard(product, isPosAdmin: true))
                                   .toList(),
                             );
                           } else {
@@ -203,7 +203,7 @@ class HomeAdminView extends StatefulWidget {
                             return Column(
                               children: snapshot.data!
                                   .map((product) =>
-                                      ProductCard(product, isAdmin: true))
+                                      ProductCard(product, isPosAdmin: true))
                                   .toList(),
                             );
                           } else {

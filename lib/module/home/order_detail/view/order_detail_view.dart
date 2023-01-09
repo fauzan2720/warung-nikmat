@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:warung_nikmat/core.dart';
 
 class OrderDetailView extends StatefulWidget {
-  const OrderDetailView(this.history, {Key? key, this.isAdmin = false})
-      : super(key: key);
+  const OrderDetailView(
+    this.history, {
+    Key? key,
+    this.isAdmin = false,
+    this.isPosAdmin = false,
+  }) : super(key: key);
   final Map<String, dynamic> history;
   final bool isAdmin;
+  final bool isPosAdmin;
 
   Widget build(context, OrderDetailController controller) {
     controller.view = this;
@@ -73,11 +79,13 @@ class OrderDetailView extends StatefulWidget {
                       height: 30.0,
                     ),
                     Text(
-                      isAdmin
-                          ? "Pesanan ${history["user"]["name"]}"
-                          : history["status"] == "Dalam Proses"
-                              ? "Pesanan kamu sedang diproses"
-                              : "Pesanan kamu sudah selesai",
+                      isPosAdmin
+                          ? "Tunjukkan QR Code ke Pembeli"
+                          : isAdmin
+                              ? "Pesanan ${history["user"]["name"]}"
+                              : history["status"] == "Dalam Proses"
+                                  ? "Tunjukkan QR Code ke Kasir"
+                                  : "Pesanan kamu sudah selesai",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: semibold,
@@ -85,13 +93,13 @@ class OrderDetailView extends StatefulWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 12.0,
                     ),
                     Text(
                       isAdmin
                           ? "Selesai"
                           : history["status"] == "Dalam Proses"
-                              ? "Enjoy!"
+                              ? "Menunggu Konfirmasi"
                               : "Terimakasih",
                       style: TextStyle(
                         fontSize: 18.0,
@@ -100,14 +108,21 @@ class OrderDetailView extends StatefulWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 20.0,
                     ),
-                    Image.asset(
-                      history["status"] == "Dalam Proses"
-                          ? imageOrderProcess
-                          : imageOrderSuccess,
-                      width: Get.width,
-                    ),
+                    history["status"] == "Dalam Proses"
+                        ? Container(
+                            padding: const EdgeInsets.fromLTRB(
+                                40.0, 0.0, 40.0, 20.0),
+                            child: QrImage(
+                              data: '${history["id"]}',
+                              foregroundColor: secondaryColor,
+                            ),
+                          )
+                        : Image.asset(
+                            imageOrderSuccess,
+                            width: Get.width,
+                          ),
                   ],
                 ),
               ),
@@ -128,7 +143,9 @@ class OrderDetailView extends StatefulWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            isAdmin ? "Daftar pesanan" : "Daftar pesanan kamu",
+                            isAdmin || isPosAdmin
+                                ? "Daftar pesanan"
+                                : "Daftar pesanan kamu",
                             style: TextStyle(
                               fontWeight: semibold,
                               color: lightColor,
@@ -162,51 +179,25 @@ class OrderDetailView extends StatefulWidget {
                       ),
                     ),
                     Divider(color: strokeColor, height: 32.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Total Pesanan",
-                          style: TextStyle(
-                            fontWeight: bold,
-                            color: lightColor,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          "${history["quantity"]}",
-                          style: TextStyle(
-                            fontWeight: extrabold,
-                            color: whiteColor,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    infoCart(
+                      label: "Total Pesanan",
+                      value: "${history["quantity"]}",
                     ),
-                    const SizedBox(
-                      height: 12.0,
+                    infoCart(
+                      label: "Total Harga",
+                      value: CurrencyFormat.convertToIdr(
+                          history["total_price"], 2),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Total Bayar",
-                          style: TextStyle(
-                            fontWeight: bold,
-                            color: lightColor,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          CurrencyFormat.convertToIdr(
-                              history["total_payment"], 2),
-                          style: TextStyle(
-                            fontWeight: extrabold,
-                            color: yellowColor,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
+                    infoCart(
+                      label: "Poin digunakan",
+                      value:
+                          "-${CurrencyFormat.convertToIdr(history["point_used"], 2)}",
+                    ),
+                    infoCart(
+                      label: "Total Bayar (${history["payment_method"]})",
+                      value: CurrencyFormat.convertToIdr(
+                          history["total_payment"], 2),
+                      isTotal: true,
                     ),
                   ],
                 ),
@@ -216,12 +207,7 @@ class OrderDetailView extends StatefulWidget {
               ),
               FozPrimaryButton(
                 label: "Kembali",
-                onPressed: () {
-                  Get.back();
-                  if (!isAdmin) {
-                    MainNavigationController.instance.onItemTapped(1);
-                  }
-                },
+                onPressed: () => Get.back(),
               ),
             ],
           ),

@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
 
 class CartView extends StatefulWidget {
-  const CartView({Key? key}) : super(key: key);
+  const CartView({Key? key, this.isAdmin = false}) : super(key: key);
+  final bool isAdmin;
 
   Widget build(context, CartController controller) {
     controller.view = this;
+    controller.paymentMethod = "Cash";
+    controller.isAdmin = isAdmin;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -14,7 +17,6 @@ class CartView extends StatefulWidget {
           margin: primarySize,
           child: Column(
             children: [
-              // HEADER
               const SizedBox(
                 height: 30.0,
               ),
@@ -71,7 +73,7 @@ class CartView extends StatefulWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 180.0,
+        height: isAdmin ? 213.0 : 269.0,
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
         decoration: BoxDecoration(
           borderRadius:
@@ -80,92 +82,50 @@ class CartView extends StatefulWidget {
         ),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total Pesanan",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: secondaryColor,
-                  ),
-                ),
-                Text(
-                  '${CartService().totalQuantity()}',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: secondaryColor,
-                  ),
-                ),
-              ],
+            FozFormDropdown(
+              items: const ["Cash", "Debit", "OVO", "Dana", "Gopay"],
+              onChanged: (value) {
+                controller.paymentMethod = value;
+              },
             ),
-            const SizedBox(
-              height: 10.0,
+            infoCart(
+              label: "Total Pesanan",
+              value: "${CartService().totalQuantity()}",
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total Bayar",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: secondaryColor,
-                  ),
-                ),
-                Text(
+            infoCart(
+              label: isAdmin ? "Total Bayar" : "Total Harga",
+              value:
                   CurrencyFormat.convertToIdr(CartService().totalPayment(), 2),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: secondaryColor,
-                  ),
-                ),
-              ],
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Poin Kamu",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: medium,
-                    color: secondaryColor,
-                  ),
-                ),
-                StreamBuilder<DocumentSnapshot<Object?>>(
-                    stream: userCollection.snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) return const Text("Error");
-                      if (!snapshot.hasData) return const Text("No Data");
+            if (!isAdmin)
+              StreamBuilder<DocumentSnapshot<Object?>>(
+                  stream: userCollection.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) return const Text("Error");
+                    if (!snapshot.hasData) return const Text("No Data");
 
-                      Map<String, dynamic> item =
-                          (snapshot.data!.data() as Map<String, dynamic>);
+                    Map<String, dynamic> item =
+                        (snapshot.data!.data() as Map<String, dynamic>);
+                    controller.getPoint(item["point"]);
 
-                      controller.yourpoint =
-                          double.parse(item["point"].toString());
-
-                      return Text(
-                        CurrencyFormat.convertToIdr(controller.yourpoint, 2),
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: medium,
-                          color: CartService().totalPayment() <= item["point"]
-                              ? secondaryColor
-                              : Colors.red[700],
+                    return Column(
+                      children: [
+                        infoCart(
+                          label: "Poin digunakan",
+                          value:
+                              "-${CurrencyFormat.convertToIdr(controller.yourpoint, 2)}",
                         ),
-                      );
-                    }),
-              ],
-            ),
+                        infoCart(
+                          label: "Total Bayar",
+                          value: CurrencyFormat.convertToIdr(
+                              controller.totalPayment, 2),
+                          isTotal: true,
+                        ),
+                      ],
+                    );
+                  }),
             const SizedBox(
-              height: 20.0,
+              height: 5.0,
             ),
             FozPrimaryButton(
               label: 'Pesan Sekarang',

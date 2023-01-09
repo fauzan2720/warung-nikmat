@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:warung_nikmat/core.dart';
 
 class CartController extends State<CartView> implements MvcController {
   static late CartController instance;
   late CartView view;
 
+  bool isAdmin = false;
   double yourpoint = 0.0;
+  double totalPayment = 0.0;
+  String paymentMethod = '';
 
   @override
   void initState() {
@@ -16,42 +20,73 @@ class CartController extends State<CartView> implements MvcController {
   @override
   void dispose() => super.dispose();
 
+  void getPoint(double pointNow) {
+    yourpoint = pointNow;
+    double getPoint =
+        (CartService().totalPayment() * 0.1); // 10% dari total price
+    if (yourpoint > getPoint) {
+      yourpoint = getPoint;
+    }
+    totalPayment = CartService().totalPayment() - yourpoint;
+  }
+
   void orderNow() {
     if (CartService().totalQuantity() == 0) {
       Get.back();
       showAlert("Oppsss", "Tidak ada menu yang dipesan");
-    } else if (CartService().totalPayment() <= yourpoint) {
+    } else {
       showConfirmation(
         onPressed: () async {
           showLoading();
+          String id = const Uuid().v4();
           try {
             Map<String, dynamic> history = {
+              'id': id,
               "quantity": CartService().totalQuantity(),
-              "total_payment": CartService().totalPayment(),
+              "payment_method": paymentMethod,
+              "total_price": CartService().totalPayment(),
+              "point_used": yourpoint,
+              "total_payment": CartService().totalPayment() - yourpoint,
               "status": "Dalam Proses",
               "products": CartService().cart,
-              "user": UserService.getUserData()
+              "user": isAdmin ? "" : UserService.getUserData()
             };
 
             await OrderService().addOrder(
+              id: id,
               quantity: CartService().totalQuantity(),
-              totalPayment: CartService().totalPayment(),
+              paymentMethod: paymentMethod,
+              totalPrice: CartService().totalPayment(),
+              pointUsed: yourpoint,
+              totalPayment: CartService().totalPayment() - yourpoint,
               status: "Dalam Proses",
               products: CartService().cart,
-              user: UserService.getUserData(),
+              user: isAdmin
+                  ? {
+                      "name": "Kasir",
+                      "photo":
+                          "https://user-images.githubusercontent.com/74108522/211291287-dcab15fe-6f08-41fc-b62b-0eb585c19008.png"
+                    }
+                  : UserService.getUserData(),
             );
 
-            await PointService.addPoint(
-              point: -double.parse("${CartService().totalPayment()}"),
-              userData: UserService.getUserData(),
-            );
+            if (!isAdmin) {
+              await PointService.addPoint(
+                point: -yourpoint,
+                userData: UserService.getUserData(),
+              );
+            }
 
             CartService().emptyCart();
             print("cart now ${CartService().cart}");
 
             Get.back();
-            MainNavigationController.instance.setState(() {});
-            Get.put(OrderDetailView(history));
+            if (!isAdmin) {
+              MainNavigationController.instance.setState(() {});
+              Get.put(OrderDetailView(history));
+            } else {
+              Get.put(OrderDetailView(history, isPosAdmin: true));
+            }
             showSuccess();
           } catch (e) {
             showAlert("Error", e.toString());
@@ -59,8 +94,6 @@ class CartController extends State<CartView> implements MvcController {
         },
         color: cardColor,
       );
-    } else {
-      showAlert("Oppsss", "Point anda tidak mencukupi");
     }
   }
 

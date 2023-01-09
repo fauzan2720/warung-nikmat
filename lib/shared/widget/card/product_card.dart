@@ -7,9 +7,11 @@ class ProductCard extends StatefulWidget {
     this.product, {
     super.key,
     this.isAdmin = false,
+    this.isPosAdmin = false,
   });
   final ProductModel product;
   final bool isAdmin;
+  final bool isPosAdmin;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -56,24 +58,25 @@ class _ProductCardState extends State<ProductCard> {
                 ],
               )
             : ActionPane(
-                extentRatio: 0.3,
+                extentRatio: widget.isPosAdmin ? 0.18 : 0.3,
                 motion: const StretchMotion(),
                 children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      WishlistService().addProduct(widget.product);
-                      showSuccess();
-                      setState(() {});
-                    },
-                    backgroundColor: yellowColor,
-                    foregroundColor:
-                        WishlistService().isWishlist(widget.product)
-                            ? warningColor
-                            : whiteColor,
-                    icon: WishlistService().isWishlist(widget.product)
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                  ),
+                  if (!widget.isPosAdmin)
+                    SlidableAction(
+                      onPressed: (context) {
+                        WishlistService().addProduct(widget.product);
+                        showSuccess();
+                        setState(() {});
+                      },
+                      backgroundColor: yellowColor,
+                      foregroundColor:
+                          WishlistService().isWishlist(widget.product)
+                              ? warningColor
+                              : whiteColor,
+                      icon: WishlistService().isWishlist(widget.product)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                    ),
                   SlidableAction(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(radiusPrimarySize),
@@ -87,7 +90,10 @@ class _ProductCardState extends State<ProductCard> {
                         type: widget.product.type!,
                         photoUrl: widget.product.photoUrl!,
                       );
-                      MainNavigationController.instance.setState(() {});
+                      if (!widget.isPosAdmin) {
+                        MainNavigationController.instance.setState(() {});
+                      }
+                      print(CartService().cart);
                       showSuccess();
                     },
                     backgroundColor: warningColor,

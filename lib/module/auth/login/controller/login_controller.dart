@@ -5,7 +5,7 @@ class LoginController extends State<LoginView> implements MvcController {
   static late LoginController instance;
   late LoginView view;
 
-  String email = 'warungnikmat@gmail.com', password = '';
+  String email = 'warungnikmat@gmail.com', password = '@warung.nikmat123';
 
   @override
   void initState() {

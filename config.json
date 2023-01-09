@@ -13,6 +13,7 @@
         "home/profile",
         "home/edit_profile",
         "admin/home_admin",
+        "admin/menu",
         "admin/add_product",
         "admin/edit_product",
         "admin/top_up",

@@ -24,24 +24,31 @@ class HomeController extends State<HomeView> implements MvcController {
   }
 
   scanQrCode() async {
-    var qrCode = await showQrcodeScanner();
-    var obj = jsonDecode(qrCode);
+    String qrCode = await showQrcodeScanner();
 
     showLoading();
 
-    if (obj["point"] > 0) {
-      await PointService.addPoint(
-        point: double.parse("${obj["point"] ?? 0}"),
-        userData: UserService.getUserData(),
-      );
-
+    if (qrCode.substring(0, 1) != "{") {
       Get.back();
-      showSuccess(
-          message:
-              "${CurrencyFormat.convertToIdr(obj["point"], 2)} Poin berhasil ditambahkan!");
+      await OrderService()
+          .getOrderFromAdmin(id: qrCode, userData: UserService.getUserData());
+      showSuccess(message: "Pesanan $qrCode berhasil diselesaikan");
     } else {
-      Get.back();
-      showAlert("Maaf", "QR Code tidak ditemukan");
+      var obj = jsonDecode(qrCode);
+      if (obj["point"] > 0) {
+        await PointService.addPoint(
+          point: double.parse("${obj["point"] ?? 0}"),
+          userData: UserService.getUserData(),
+        );
+
+        Get.back();
+        showSuccess(
+            message:
+                "${CurrencyFormat.convertToIdr(obj["point"], 2)} Poin berhasil ditambahkan!");
+      } else {
+        Get.back();
+        showAlert("Maaf", "QR Code tidak ditemukan");
+      }
     }
   }
 

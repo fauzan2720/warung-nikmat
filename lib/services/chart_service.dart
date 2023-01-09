@@ -50,7 +50,10 @@ class ChartService {
           }
         }).toList();
 
-        listItem.length = 7;
+        if (listItem.length > 7) {
+          listItem.length = 7;
+        }
+
         listItem.sort((a, b) => a.x.compareTo(b.x));
 
         return listItem;
