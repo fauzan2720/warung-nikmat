@@ -9,8 +9,11 @@ class TopUpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String isDateFormat =
-        DateFormat("H:m - dd MMM y").format(DateTime.parse(item["created_at"]));
+    String isDateFormat = isOrder
+        ? DateFormat("H:m - dd MMM y")
+            .format(DateTime.parse(item["updated_at"]))
+        : DateFormat("H:m - dd MMM y")
+            .format(DateTime.parse(item["created_at"]));
 
     return InkWell(
       onTap: () {
