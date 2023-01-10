@@ -65,7 +65,7 @@ class CartView extends StatefulWidget {
               Column(
                 children: CartService()
                     .cart
-                    .map((product) => CartCard(product))
+                    .map((product) => CartCard(product, isAdmin: isAdmin))
                     .toList(),
               )
             ],
@@ -73,7 +73,7 @@ class CartView extends StatefulWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        height: isAdmin ? 213.0 : 269.0,
+        height: 269.0,
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
         decoration: BoxDecoration(
           borderRadius:
@@ -93,11 +93,27 @@ class CartView extends StatefulWidget {
               value: "${CartService().totalQuantity()}",
             ),
             infoCart(
-              label: isAdmin ? "Total Bayar" : "Total Harga",
+              label: "Total Harga",
               value:
                   CurrencyFormat.convertToIdr(CartService().totalPayment(), 2),
             ),
-            if (!isAdmin)
+            if (isAdmin)
+              Column(
+                children: [
+                  infoCart(
+                    label: "Poin digunakan",
+                    value:
+                        "-${CurrencyFormat.convertToIdr(controller.yourpoint, 2)}",
+                  ),
+                  infoCart(
+                    label: "Total Bayar",
+                    value: CurrencyFormat.convertToIdr(
+                        CartService().totalPayment() - controller.yourpoint, 2),
+                    isTotal: true,
+                  ),
+                ],
+              )
+            else
               StreamBuilder<DocumentSnapshot<Object?>>(
                   stream: userCollection.snapshots(),
                   builder: (context, snapshot) {

@@ -6,8 +6,10 @@ class CartCard extends StatefulWidget {
   const CartCard(
     this.product, {
     super.key,
+    this.isAdmin = false,
   });
   final dynamic product;
+  final bool isAdmin;
 
   @override
   State<CartCard> createState() => _CartCardState();
@@ -36,7 +38,9 @@ class _CartCardState extends State<CartCard> {
                 showConfirmation(onPressed: () {
                   CartService().removeCart(widget.product["id"]);
                   CartController.instance.setState(() {});
-                  MainNavigationController.instance.setState(() {});
+                  if (!widget.isAdmin) {
+                    MainNavigationController.instance.setState(() {});
+                  }
                   showSuccess();
                 });
               },
@@ -128,7 +132,9 @@ class _CartCardState extends State<CartCard> {
                     onPressed: () {
                       CartService().reduceQuantity(widget.product["id"]);
                       CartController.instance.setState(() {});
-                      MainNavigationController.instance.setState(() {});
+                      if (!widget.isAdmin) {
+                        MainNavigationController.instance.setState(() {});
+                      }
                     },
                     icon: Icon(
                       Icons.remove_circle,
@@ -147,7 +153,9 @@ class _CartCardState extends State<CartCard> {
                     onPressed: () {
                       CartService().addQuantity(widget.product["id"]);
                       CartController.instance.setState(() {});
-                      MainNavigationController.instance.setState(() {});
+                      if (!widget.isAdmin) {
+                        MainNavigationController.instance.setState(() {});
+                      }
                     },
                     icon: Icon(
                       Icons.add_circle,
