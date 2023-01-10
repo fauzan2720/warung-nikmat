@@ -94,7 +94,7 @@ class _NewOrderCardState extends State<NewOrderCard> {
                       ),
                     ),
                     Text(
-                      "${widget.item["quantity"]} menu - terbayar ${CurrencyFormat.convertToIdr(widget.item["total_payment"], 2)} (${widget.item["payment_method"]})",
+                      "${widget.item["quantity"]} menu - total ${CurrencyFormat.convertToIdr(widget.item["total_payment"], 2)} (${widget.item["payment_method"]})",
                       style: TextStyle(
                         fontSize: 12.0,
                         color: secondaryColor,
