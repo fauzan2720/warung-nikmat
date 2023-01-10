@@ -11,7 +11,7 @@ class HistoryView extends StatefulWidget {
     controller.view = this;
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text("History"),
@@ -34,6 +34,7 @@ class HistoryView extends StatefulWidget {
             tabs: const [
               Tab(text: 'Dalam Proses'),
               Tab(text: 'Selesai'),
+              Tab(text: 'Ditolak'),
             ],
           ),
         ),
@@ -74,6 +75,19 @@ class HistoryView extends StatefulWidget {
                           (data.docs[index].data() as Map<String, dynamic>);
 
                       return item["status"] == "Selesai" &&
+                              item["user"]["id"] ==
+                                  FirebaseAuth.instance.currentUser!.uid
+                          ? HistoryCard(item)
+                          : const SizedBox();
+                    },
+                  ),
+                  ListView.builder(
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> item =
+                          (data.docs[index].data() as Map<String, dynamic>);
+
+                      return item["status"] == "Ditolak" &&
                               item["user"]["id"] ==
                                   FirebaseAuth.instance.currentUser!.uid
                           ? HistoryCard(item)

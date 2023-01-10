@@ -85,7 +85,9 @@ class OrderDetailView extends StatefulWidget {
                               ? "Pesanan ${history["user"]["name"]}"
                               : history["status"] == "Dalam Proses"
                                   ? "Tunjukkan QR Code ke Kasir"
-                                  : "Pesanan kamu sudah selesai",
+                                  : history["status"] == "Ditolak"
+                                      ? "Status pesanan kamu"
+                                      : "Pesanan kamu sudah selesai",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: semibold,
@@ -96,15 +98,17 @@ class OrderDetailView extends StatefulWidget {
                       height: 12.0,
                     ),
                     Text(
-                      isAdmin
-                          ? "Selesai"
+                      isAdmin || history["status"] == "Ditolak"
+                          ? history["status"]
                           : history["status"] == "Dalam Proses"
                               ? "Menunggu Konfirmasi"
                               : "Terimakasih",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: extrabold,
-                        color: yellowColor,
+                        color: history["status"] == "Ditolak"
+                            ? Colors.red
+                            : yellowColor,
                       ),
                     ),
                     const SizedBox(
@@ -120,7 +124,9 @@ class OrderDetailView extends StatefulWidget {
                             ),
                           )
                         : Image.asset(
-                            imageOrderSuccess,
+                            history["status"] == "Ditolak"
+                                ? imageOrderProcess
+                                : imageOrderSuccess,
                             width: Get.width,
                           ),
                   ],

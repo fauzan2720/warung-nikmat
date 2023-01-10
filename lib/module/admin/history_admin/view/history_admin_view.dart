@@ -10,7 +10,7 @@ class HistoryAdminView extends StatefulWidget {
     controller.view = this;
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Riwayat Pesanan"),
@@ -23,7 +23,7 @@ class HistoryAdminView extends StatefulWidget {
                 icon: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text("Pesanan Selesai"),
+                    Text("Selesai"),
                     SizedBox(
                       width: 5.0,
                     ),
@@ -39,7 +39,23 @@ class HistoryAdminView extends StatefulWidget {
                 icon: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text("Top Up"),
+                    Text("Ditolak"),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Icon(
+                      Icons.close,
+                      size: 14.0,
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
+              ),
+              Tab(
+                icon: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text("Cashback"),
                     SizedBox(
                       width: 5.0,
                     ),
@@ -78,6 +94,35 @@ class HistoryAdminView extends StatefulWidget {
                           (data.docs[index].data() as Map<String, dynamic>);
 
                       return item["status"] == "Selesai"
+                          ? TopUpCard(item, isOrder: true)
+                          : const SizedBox();
+                    },
+                  ),
+                );
+              },
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("orders")
+                  .orderBy('updated_at', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) return const Text("Error");
+                if (snapshot.data == null) return Container();
+                if (snapshot.data!.docs.isEmpty) {
+                  return const IsEmpty();
+                }
+                final data = snapshot.data!;
+
+                return Padding(
+                  padding: primarySize,
+                  child: ListView.builder(
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> item =
+                          (data.docs[index].data() as Map<String, dynamic>);
+
+                      return item["status"] == "Ditolak"
                           ? TopUpCard(item, isOrder: true)
                           : const SizedBox();
                     },

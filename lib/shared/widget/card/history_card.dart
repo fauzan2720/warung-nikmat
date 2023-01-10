@@ -38,7 +38,9 @@ class HistoryCard extends StatelessWidget {
                       borderRadius: radiusPrimary,
                       color: history["status"] == "Selesai"
                           ? primaryColor
-                          : warningColor,
+                          : history["status"] == "Ditolak"
+                              ? Colors.red
+                              : warningColor,
                     ),
                     child: Text(
                       "${history["status"]}",

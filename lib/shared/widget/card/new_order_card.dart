@@ -106,7 +106,19 @@ class _NewOrderCardState extends State<NewOrderCard> {
             ),
             widget.item["user"]["name"] == "Kasir"
                 ? IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showLoading();
+                      showConfirmation(onPressed: () async {
+                        try {
+                          await OrderService().deleteOrder(widget.item["id"]);
+                          Get.back();
+                          showSuccess();
+                        } catch (e) {
+                          Get.back();
+                          showAlert("Error", e.toString());
+                        }
+                      });
+                    },
                     icon: Icon(
                       Icons.delete,
                       color: Colors.red[500],

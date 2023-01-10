@@ -34,6 +34,14 @@ class OrderService {
     }
   }
 
+  Future<void> deleteOrder(String id) async {
+    try {
+      firestore.collection('orders').doc(id).delete();
+    } catch (e) {
+      throw Exception('Data gagal disimpan, silahkan dicoba lagi');
+    }
+  }
+
   Future<void> markAsDone(String id) async {
     try {
       firestore.collection('orders').doc(id).set({
