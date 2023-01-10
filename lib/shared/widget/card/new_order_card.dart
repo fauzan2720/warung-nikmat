@@ -107,14 +107,11 @@ class _NewOrderCardState extends State<NewOrderCard> {
             widget.item["user"]["name"] == "Kasir"
                 ? IconButton(
                     onPressed: () {
-                      showLoading();
                       showConfirmation(onPressed: () async {
                         try {
                           await OrderService().deleteOrder(widget.item["id"]);
-                          Get.back();
                           showSuccess();
                         } catch (e) {
-                          Get.back();
                           showAlert("Error", e.toString());
                         }
                       });
@@ -149,7 +146,6 @@ class _NewOrderCardState extends State<NewOrderCard> {
                       IconButton(
                         onPressed: () {
                           showConfirmation(
-                            color: primaryColor,
                             onPressed: () async {
                               await OrderService()
                                   .markAsReject("${widget.item["id"]}");
