@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: Get.navigatorKey,
       theme: ThemeData(
+        // useMaterial3: true,
         scaffoldBackgroundColor: backgroundColor,
         textTheme: GoogleFonts.mulishTextTheme(
           Theme.of(context).textTheme,

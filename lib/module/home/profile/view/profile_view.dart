@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
+import 'package:warung_nikmat/shared/util/utility/go_to_url.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -192,8 +193,21 @@ class ProfileView extends StatefulWidget {
                     height: 30.0,
                   ),
                   FozMenuButton(
+                    label: 'Kebijakan Pribadi',
+                    onTap: () => GoToUrl().launcUrl(
+                        "https://policy.webozan.com/warung-nikmat.html"),
+                    icon: Icon(
+                      Icons.policy,
+                      color: secondaryColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  FozMenuButton(
                     label: 'Pusat Bantuan',
-                    onTap: () {},
+                    onTap: () => GoToWhatsApp().launchWhatsApp(
+                        "Hallo kak, perkenalkan saya ${FirebaseAuthService().user.displayName}.\nIjin bertanya, "),
                     icon: Icon(
                       Icons.help_outline,
                       color: secondaryColor,
