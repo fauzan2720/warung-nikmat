@@ -35,3 +35,11 @@ Aplikasi Pemesanan Makanan pada Warung Nikmat yang terletak di Jl. Imam Sukari N
 18.	mobile_scanner: ^2.1.0
 19.	url_launcher: ^6.1.7
 20.	qr_flutter: ^4.0.0
+
+## Get App
+
+https://play.google.com/store/apps/details?id=com.fauzan.warung_nikmat
+
+## Demo App
+
+https://youtu.be/Aa_HunfR4X0
