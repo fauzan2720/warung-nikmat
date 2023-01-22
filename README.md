@@ -15,26 +15,27 @@ Aplikasi Pemesanan Makanan pada Warung Nikmat yang terletak di Jl. Imam Sukari N
 
 ## Dependencies
 
-1.	google_fonts: ^3.0.1
-2.	firebase_core: ^2.4.0
-3.	cloud_firestore: ^4.2.0
-4.	firebase_auth: ^4.2.1
-5.	google_sign_in: ^5.4.2
-6.	intl: ^0.17.0
-7.	flutter_slidable: ^2.0.0
-8.	flutter_launcher_icons: ^0.11.0
-9.	flutter_spinkit: ^5.1.0
-10.	syncfusion_flutter_charts: ^20.4.41
-11.	dio: ^4.0.6
-12.	file_picker: ^5.2.4
-13.	image_picker: ^0.8.6
-14.	uuid: ^3.0.7
-15.	rflutter_alert: ^2.0.4
-16.	hive: ^2.2.3
-17.	path_provider: ^2.0.11
-18.	mobile_scanner: ^2.1.0
-19.	url_launcher: ^6.1.7
-20.	qr_flutter: ^4.0.0
+1.	cupertino_icons: ^1.0.2
+2.	google_fonts: ^3.0.1
+3.	firebase_core: ^2.4.0
+4.	cloud_firestore: ^4.2.0
+5.	firebase_auth: ^4.2.1
+6.	google_sign_in: ^5.4.2
+7.	intl: ^0.17.0
+8.	flutter_slidable: ^2.0.0
+9.	flutter_launcher_icons: ^0.11.0
+10.	flutter_spinkit: ^5.1.0
+11.	syncfusion_flutter_charts: ^20.4.41
+12.	dio: ^4.0.6
+13.	file_picker: ^5.2.4
+14.	image_picker: ^0.8.6
+15.	uuid: ^3.0.7
+16.	rflutter_alert: ^2.0.4
+17.	hive: ^2.2.3
+18.	path_provider: ^2.0.11
+19.	mobile_scanner: ^2.1.0
+20.	url_launcher: ^6.1.7
+21.	qr_flutter: ^4.0.0
 
 ## Get App
 
