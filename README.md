@@ -44,3 +44,7 @@ https://play.google.com/store/apps/details?id=com.fauzan.warung_nikmat
 ## Demo App
 
 https://youtu.be/Aa_HunfR4X0
+
+## Reference UI UX
+
+https://www.figma.com/community/file/1095416903981479457
