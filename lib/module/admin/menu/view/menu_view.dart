@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:warung_nikmat/core.dart';
+import 'package:warung_nikmat/module/admin/menu/controller/menu_controller.dart'
+    as menu;
 
 class MenuView extends StatefulWidget {
   const MenuView({Key? key}) : super(key: key);
 
-  Widget build(context, MenuController controller) {
+  Widget build(context, menu.MenuController controller) {
     controller.view = this;
 
     return Scaffold(
@@ -102,5 +104,5 @@ class MenuView extends StatefulWidget {
   }
 
   @override
-  State<MenuView> createState() => MenuController();
+  State<MenuView> createState() => menu.MenuController();
 }
