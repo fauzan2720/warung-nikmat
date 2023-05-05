@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "735657819173-f4bqv0cutjlnt561s89ggtd3hifvnae8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fauzan.warung_nikmat",
+            "certificate_hash": "d49eebce50e746e9f77ee8c2d2704a2a842daa9f"
+          }
+        },
+        {
           "client_id": "735657819173-vo37qv9ubvls1dodi9fa8fom42ovv9dh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
